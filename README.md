@@ -35,12 +35,12 @@
     * pefile
     * argparse
 
-    Para executar a aplicação:
-    ```
-    python3 main.py --file-one ../../../pratica-3/source/Tibia_Setup.exe
+  Para executar a aplicação:
+  ```
+  python3 main.py --file-one Tibia_Setup.exe
 
-    python3 main2.py --file-one Tibia_Setup.exe --file-two avira_pt-br_sptl1_89fae122b00d581b__pavwws.exe
-    ```
+  python3 main2.py --file-one Tibia_Setup.exe --file-two avira_pt-br_sptl1_89fae122b00d581b__pavwws.exe
+  ```
 
 ### T3 ###
 
