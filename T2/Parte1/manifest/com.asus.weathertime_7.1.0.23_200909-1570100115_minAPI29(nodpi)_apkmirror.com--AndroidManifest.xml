@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?><manifest xmlns:android="http://schemas.android.com/apk/res/android" android:compileSdkVersion="29" android:compileSdkVersionCodename="10" package="com.asus.weathertime" platformBuildVersionCode="29" platformBuildVersionName="10">
+    <supports-screens android:anyDensity="true" android:largeScreens="true" android:normalScreens="true" android:smallScreens="true"/>
+    <uses-feature android:name="asus.software.zenui"/>
+    <permission android:name="com.asus.weathertime.permission.READ_WEATHER_INFO" android:protectionLevel="signatureOrSystem"/>
+    <permission android:name="com.asus.weathertime.permission.WRITE_WEATHER_INFO" android:protectionLevel="signatureOrSystem"/>
+    <permission android:name="com.asus.weathertime.permission.RECEIVE_DATA_CHANGED" android:protectionLevel="signatureOrSystem"/>
+    <permission android:name="android.permission.WEATHERTIME_PROVIDER_PERMISSION" android:protectionLevel="dangerous"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="com.asus.permission.APPLY_THEME"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="com.asus.launcher.permission.READ_SETTINGS"/>
+    <uses-permission android:name="com.asus.launcher3.permission.READ_SETTINGS"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="com.asus.permission.ANIMATION_ICON"/>
+    <uses-permission android:name="com.asus.permission.SMART_WALLPAPER"/>
+    <uses-permission android:name="com.asus.permission.SYSTEM_COLOR"/>
+    <uses-permission android:name="com.asus.permission.LAUNCHER_SUPPORT_ANIMATED_ICON"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
+    <uses-permission android:name="com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE"/>
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
+    <application android:allowBackup="true" android:appComponentFactory="androidx.core.app.CoreComponentFactory" android:icon="@mipmap/app_icon_release" android:label="@string/weather_app" android:name="com.asus.weathertime.WeatherApplication" android:resizeableActivity="false" android:supportsRtl="true" android:theme="@style/AppTheme" android:usesCleartextTraffic="true">
+        <uses-library android:name="android.test.runner" android:required="false"/>
+        <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version"/>
+        <meta-data android:name="support_theme_diy_feature" android:value="1"/>
+        <meta-data android:name="weathertime_support_feature" android:value="@integer/weathertime_support_feature"/>
+        <meta-data android:name="weathertime_third_party_apps_support_feature" android:value="@integer/weathertime_third_party_apps_support_feature"/>
+        <meta-data android:name="firebase_crashlytics_collection_enabled" android:value="false"/>
+        <provider android:authorities="com.asus.weathertime.provider" android:exported="false" android:grantUriPermissions="true" android:name="com.asus.weathertime.WeatherContentProvider"/>
+        <provider android:authorities="com.asus.weathertime.export.provider" android:exported="true" android:name="com.asus.weathertime.WeatherExportContentProvider" android:readPermission="com.asus.weathertime.permission.READ_WEATHER_INFO" android:writePermission="com.asus.weathertime.permission.WRITE_WEATHER_INFO"/>
+        <provider android:authorities="com.asus.weathertime.search.provider" android:exported="false" android:name="com.asus.weathertime.search.SearchContentProvider"/>
+        <activity android:configChanges="orientation|screenSize" android:label="@string/weather_app" android:launchMode="singleTop" android:name="com.asus.weathertime.search.WeatherSearch">
+            <intent-filter>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+            <intent-filter>
+                <category android:name="android.intent.category.MONKEY"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH"/>
+            </intent-filter>
+            <meta-data android:name="android.app.searchable" android:resource="@xml/searchable"/>
+        </activity>
+        <activity android:hardwareAccelerated="true" android:label="@string/location_list" android:name="com.asus.weathertime.menu.WeatherCityListActivity">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+            <intent-filter>
+                <category android:name="android.intent.category.MONKEY"/>
+            </intent-filter>
+        </activity>
+        <activity android:hardwareAccelerated="true" android:label="@string/select_city" android:name="com.asus.weathertime.WeatherWidgetConfigActivity">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity android:hardwareAccelerated="true" android:label="@string/menu_edit_location" android:name="com.asus.weathertime.menu.WeatherCityEditDeleteActivity">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+            <intent-filter>
+                <category android:name="android.intent.category.MONKEY"/>
+            </intent-filter>
+        </activity>
+        <activity android:hardwareAccelerated="true" android:label="@string/select_city" android:name="com.asus.weathertime.menu.setting.WeatherSelectCurrentLocationManuallyActivity">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity android:configChanges="keyboard|keyboardHidden|orientation|screenSize" android:hardwareAccelerated="true" android:name="com.asus.weathertime.browser.BrowserActivity"/>
+        <receiver android:enabled="true" android:name="com.asus.weathertime.receiver.WeatherReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED"/>
+                <action android:name="com.asus.weathertime.action.CONNECTIVITY_CHANGE"/>
+                <action android:name="com.asus.weathertime.weatherIntentAction"/>
+                <action android:name="com.asus.weathertime.CHECK_DATA_EXPIRED"/>
+                <action android:name="android.intent.action.LOCALE_CHANGED"/>
+                <action android:name="com.asus.weathertime.ACTION_LOCATION_UNSTABLE_HANDLE"/>
+                <action android:name="com.asus.datatransfer.WEATHER_RESTORED"/>
+                <action android:name="com.asus.weathertime.ACTION_LOCATION_UPDATE"/>
+                <action android:name="asus.intent.action_LAUNCHER_SUPPORT_ANIMATED_ICON"/>
+            </intent-filter>
+        </receiver>
+        <receiver android:enabled="true" android:exported="true" android:name="com.asus.weathertime.receiver.WeatherWidgetReceiver" android:permission="com.asus.permission.APPLY_THEME">
+            <intent-filter>
+                <action android:name="com.asus.weathertime.weatherIntentAction"/>
+                <action android:name="com.asus.weathertime.weatherClockAction"/>
+                <action android:name="android.intent.action.TIMEZONE_CHANGED"/>
+                <action android:name="asus.intent.action.THEME_CHANGE"/>
+                <action android:name="android.app.action.NEXT_ALARM_CLOCK_CHANGED"/>
+                <action android:name="com.asus.themeapp.THEME_CHANGE"/>
+                <action android:name="com.asus.themeapp.THEME_CHANGE_DIY"/>
+                <action android:name="com.asus.settings.SYSTEM_COLOR_CHANGE"/>
+            </intent-filter>
+        </receiver>
+        <service android:foregroundServiceType="location" android:name="com.asus.weathertime.service.WeatherBackgroundUpdateJobService" android:permission="android.permission.BIND_JOB_SERVICE"/>
+        <service android:name="com.asus.weathertime.service.UpdateDatabaseJobService" android:permission="android.permission.BIND_JOB_SERVICE"/>
+        <service android:name="com.asus.weathertime.service.TrackUpdateFlowLogJobService" android:permission="android.permission.BIND_JOB_SERVICE"/>
+        <activity android:exported="false" android:label="@string/weathertitle" android:name="com.asus.weathertime.menu.setting.WeatherFragmentSettings" android:windowSoftInputMode="adjustPan">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.NOTIFICATION_PREFERENCES"/>
+            </intent-filter>
+        </activity>
+        <activity android:exported="false" android:label="@string/weather_update_freq_title" android:name="com.asus.weathertime.menu.WeatherUpdateFrequency" android:windowSoftInputMode="adjustPan"/>
+        <activity android:exported="false" android:label="@string/about_preference_item_title_open_source_licenses" android:name="com.asus.weathertime.menu.setting.WeatherOSL" android:windowSoftInputMode="adjustPan"/>
+        <activity android:exported="false" android:label="@string/use_license_agreement" android:name="com.asus.weathertime.menu.setting.WeatherEULA" android:windowSoftInputMode="adjustPan"/>
+        <activity android:label="@string/about" android:name="com.asus.weathertime.menu.WeatherAbout" android:windowSoftInputMode="adjustPan"/>
+        <activity android:label="@string/content_widget_background_setting" android:name="com.asus.weathertime.menu.WeatherWidgetBackground" android:windowSoftInputMode="adjustPan"/>
+        <activity android:hardwareAccelerated="true" android:label="@string/weather_app" android:launchMode="singleTask" android:name="com.asus.weathertime.WeatherTimeSettings" android:theme="@style/MainPageTheme" android:windowSoftInputMode="adjustNothing">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+            <intent-filter android:label="@string/weather_app">
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:host="asus.com" android:scheme="http"/>
+            </intent-filter>
+            <intent-filter>
+                <category android:name="android.intent.category.MONKEY"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.asus.datatransfer"/>
+                <category android:name="com.asus.datatransfer"/>
+            </intent-filter>
+            <meta-data android:name="android.app.shortcuts" android:resource="@xml/shortcuts"/>
+        </activity>
+        <receiver android:name="com.asus.weathertime.receiver.SmartWallpaperReceiver" android:permission="com.asus.permission.SMART_WALLPAPER">
+            <intent-filter>
+                <action android:name="asus_wallpaper_option_launcher"/>
+            </intent-filter>
+        </receiver>
+        <receiver android:enabled="true" android:exported="false" android:label="@string/weather_app" android:name="com.asus.weathertime.WeatherWidgetProviderPhone">
+            <intent-filter>
+                <action android:name="com.asus.weathertime.action.CONNECTIVITY_CHANGE"/>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+                <action android:name="com.asus.weathertime.weatherIntentAction"/>
+                <action android:name="com.asus.weathertime.updateDateAction"/>
+                <action android:name="com.asus.weathertime.clearNotification"/>
+                <action android:name="android.intent.action.TIMEZONE_CHANGED"/>
+                <action android:name="android.intent.action.TIME_SET"/>
+                <action android:name="android.intent.action.DATE_CHANGED"/>
+                <action android:name="weather.background.update.jobservice"/>
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/weather_provider"/>
+        </receiver>
+        <receiver android:enabled="true" android:exported="false" android:label="@string/weather_app" android:name="com.asus.weathertime.WeatherWidgetProviderPhoneWithForecast">
+            <intent-filter>
+                <action android:name="com.asus.weathertime.action.CONNECTIVITY_CHANGE"/>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+                <action android:name="com.asus.weathertime.weatherIntentAction"/>
+                <action android:name="com.asus.weathertime.updateDateAction"/>
+                <action android:name="com.asus.weathertime.clearNotification"/>
+                <action android:name="com.asus.weathertime.forecastAQI"/>
+                <action android:name="android.intent.action.TIMEZONE_CHANGED"/>
+                <action android:name="android.intent.action.TIME_SET"/>
+                <action android:name="android.intent.action.DATE_CHANGED"/>
+                <action android:name="weather.background.update.jobservice"/>
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/weather_provider_forecast"/>
+        </receiver>
+        <receiver android:exported="true" android:name="com.asus.weathertime.receiver.AppIndexingUpdateReceiver" android:permission="com.google.android.gms.permission.APPINDEXING">
+            <intent-filter>
+                <action android:name="com.google.firebase.appindexing.UPDATE_INDEX"/>
+            </intent-filter>
+        </receiver>
+        <service android:name="com.asus.weathertime.service.AppIndexingUpdateService" android:permission="android.permission.BIND_JOB_SERVICE"/>
+        <provider android:authorities="com.asus.weathertime.fileprovider" android:exported="false" android:grantUriPermissions="true" android:name="androidx.core.content.FileProvider">
+            <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/share_path"/>
+        </provider>
+        <service android:exported="false" android:name="com.google.firebase.components.ComponentDiscoveryService">
+            <meta-data android:name="com.google.firebase.components:com.google.firebase.analytics.connector.internal.AnalyticsConnectorRegistrar" android:value="com.google.firebase.components.ComponentRegistrar"/>
+            <meta-data android:name="com.google.firebase.components:com.google.firebase.iid.Registrar" android:value="com.google.firebase.components.ComponentRegistrar"/>
+        </service>
+        <receiver android:enabled="true" android:exported="false" android:name="com.google.android.gms.measurement.AppMeasurementReceiver"/>
+        <receiver android:enabled="true" android:exported="true" android:name="com.google.android.gms.measurement.AppMeasurementInstallReferrerReceiver" android:permission="android.permission.INSTALL_PACKAGES">
+            <intent-filter>
+                <action android:name="com.android.vending.INSTALL_REFERRER"/>
+            </intent-filter>
+        </receiver>
+        <service android:enabled="true" android:exported="false" android:name="com.google.android.gms.measurement.AppMeasurementService"/>
+        <service android:enabled="true" android:exported="false" android:name="com.google.android.gms.measurement.AppMeasurementJobService" android:permission="android.permission.BIND_JOB_SERVICE"/>
+        <receiver android:exported="true" android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver" android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
+            </intent-filter>
+        </receiver>
+        <service android:exported="true" android:name="com.google.firebase.iid.FirebaseInstanceIdService">
+            <intent-filter android:priority="-500">
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
+        <activity android:exported="false" android:name="com.google.android.gms.common.api.GoogleApiActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+        <provider android:authorities="com.asus.weathertime.crashlyticsinitprovider" android:exported="false" android:initOrder="90" android:name="com.crashlytics.android.CrashlyticsInitProvider"/>
+        <provider android:authorities="com.asus.weathertime.firebaseinitprovider" android:exported="false" android:initOrder="100" android:name="com.google.firebase.provider.FirebaseInitProvider"/>
+        <provider android:authorities="com.asus.weathertime.lifecycle-process" android:exported="false" android:multiprocess="true" android:name="androidx.lifecycle.ProcessLifecycleOwnerInitializer"/>
+    </application>
+</manifest>

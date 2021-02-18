@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?><manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.asus.browser" platformBuildVersionCode="23" platformBuildVersionName="6.0-2704002">
+    <original-package android:name="com.android.browser"/>
+    <permission android:label="@string/permission_preload_label" android:name="com.asus.browser.permission.PRELOAD" android:protectionLevel="signatureOrSystem"/>
+    <permission android:name="com.asus.browser.permission.BROWSER_PERMISSION" android:protectionLevel="signature"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_DOWNLOAD_MANAGER"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION"/>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.USE_CREDENTIALS"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.NFC"/>
+    <uses-permission android:name="android.permission.SEND_DOWNLOAD_COMPLETED_INTENTS"/>
+    <uses-permission android:name="android.permission.SET_WALLPAPER"/>
+    <uses-permission android:name="android.permission.SET_WALLPAPER_HINTS"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS"/>
+    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS"/>
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.READ_PROFILE"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="com.android.browser.permission.READ_HISTORY_BOOKMARKS"/>
+    <uses-permission android:name="com.android.browser.permission.WRITE_HISTORY_BOOKMARKS"/>
+    <uses-permission android:name="com.android.chrome.permission.READ_WRITE_BOOKMARK_FOLDERS"/>
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT"/>
+    <uses-permission android:name="com.asus.kidslauncher.permission.READ_SETTINGS"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-feature android:name="asus.software.zenui"/>
+    <uses-feature android:name="android.hardware.location" android:required="false"/>
+    <uses-feature android:name="android.hardware.location.gps" android:required="false"/>
+    <uses-feature android:name="android.hardware.location.network" android:required="false"/>
+    <uses-feature android:name="android.hardware.nfc" android:required="false"/>
+    <uses-feature android:name="android.hardware.wifi" android:required="false"/>
+    <application android:fullBackupContent="@xml/browserbackupscheme" android:hardwareAccelerated="true" android:icon="@mipmap/app_icon_release" android:label="@string/application_name" android:name="com.asus.browser.Browser" android:taskAffinity="android.task.browser" android:theme="@android:style/Theme.DeviceDefault.Light.DarkActionBar">
+        <activity android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|uiMode" android:name="com.google.android.gms.ads.AdActivity" android:theme="@android:style/Theme.Translucent"/>
+        <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version"/>
+        <provider android:authorities="com.asus.browser;asusbrowser" android:exported="true" android:multiprocess="false" android:name="com.asus.browser.provider.BrowserProvider2" android:readPermission="com.android.browser.permission.READ_HISTORY_BOOKMARKS" android:writePermission="com.android.browser.permission.WRITE_HISTORY_BOOKMARKS">
+            <path-permission android:path="/bookmarks/search_suggest_query" android:readPermission="android.permission.GLOBAL_SEARCH"/>
+        </provider>
+        <activity android:alwaysRetainTaskState="true" android:configChanges="keyboard|keyboardHidden|locale|orientation|screenSize" android:label="@string/application_name" android:launchMode="singleTask" android:name="com.android.browser.BrowserActivity" android:theme="@style/BrowserTheme" android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.speech.action.VOICE_SEARCH_RESULTS"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <category android:name="com.asus.browser.WIDGET_OPEN_BOOKMARK"/>
+                <data android:scheme="http"/>
+                <data android:scheme="https"/>
+                <data android:scheme="about"/>
+                <data android:scheme="javascript"/>
+                <data android:scheme="reader"/>
+                <data android:scheme="readitlater"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:scheme="http"/>
+                <data android:scheme="https"/>
+                <data android:scheme="inline"/>
+                <data android:mimeType="text/html"/>
+                <data android:mimeType="text/plain"/>
+                <data android:mimeType="application/xhtml+xml"/>
+                <data android:mimeType="application/vnd.wap.xhtml+xml"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:scheme="http"/>
+                <data android:scheme="https"/>
+                <data android:scheme="file"/>
+                <data android:mimeType="application/x-webarchive-xml"/>
+            </intent-filter>
+            <intent-filter android:priority="-101">
+                <action android:name="android.nfc.action.NDEF_DISCOVERED"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:scheme="http"/>
+                <data android:scheme="https"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <category android:name="android.intent.category.APP_BROWSER"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.WEB_SEARCH"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.MEDIA_SEARCH"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:mimeType="text/html"/>
+            </intent-filter>
+            <meta-data android:name="android.app.searchable" android:resource="@xml/searchable"/>
+        </activity>
+        <activity android:icon="@mipmap/ic_launcher_shortcut_browser_bookmark" android:label="@string/shortcut_bookmark" android:name="com.asus.browser.ShortcutActivity" android:theme="@style/ShortcutTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.CREATE_SHORTCUT"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity android:configChanges="layoutDirection|locale" android:label="@string/menu_preferences" android:name="com.asus.browser.BrowserPreferencesPage" android:theme="@style/BrowserPreferenceTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MANAGE_NETWORK_USAGE"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity android:excludeFromRecents="true" android:label="@string/bookmarks_search" android:name="com.asus.browser.BookmarkSearch" android:stateNotNeeded="true" android:theme="@android:style/Theme.NoDisplay">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+            <meta-data android:name="android.app.searchable" android:resource="@xml/bookmarks_searchable"/>
+        </activity>
+        <activity android:configChanges="keyboardHidden|orientation|screenSize" android:label="@string/bookmarks_add_to_folder_page" android:name="com.asus.browser.FrontPageQuickAccessAddToFolderActivity" android:theme="@style/ComboViewTheme" android:windowSoftInputMode="adjustResize"/>
+        <activity android:configChanges="keyboardHidden|orientation|screenSize" android:label="@string/bookmarks_add_page" android:name="com.asus.browser.AddBookmarkPage" android:theme="@style/DialogWhenLarge" android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.INSERT"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:mimeType="vnd.android.cursor.dir/bookmark"/>
+            </intent-filter>
+        </activity>
+        <activity android:configChanges="keyboardHidden|screenSize" android:name="com.asus.browser.ComboViewActivity" android:theme="@style/ComboViewTheme"/>
+        <receiver android:label="@string/bookmarks" android:name="com.asus.browser.widget.BookmarkThumbnailWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+                <action android:name="com.asus.browser.BOOKMARK_APPWIDGET_UPDATE"/>
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/bookmarkthumbnailwidget_info"/>
+        </receiver>
+        <service android:exported="false" android:name="com.asus.browser.widget.BookmarkThumbnailWidgetService" android:permission="android.permission.BIND_REMOTEVIEWS"/>
+        <receiver android:exported="false" android:name="com.asus.browser.widget.BookmarkWidgetProxy"/>
+        <meta-data android:name="android.app.default_searchable" android:value="com.asus.browser.BrowserActivity"/>
+        <receiver android:name="com.asus.browser.OpenDownloadReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.DOWNLOAD_NOTIFICATION_CLICKED"/>
+                <action android:name="android.intent.action.DOWNLOAD_CHANGESTORAGE"/>
+            </intent-filter>
+        </receiver>
+        <provider android:authorities="com.asus.browser.home" android:exported="false" android:name="com.asus.browser.homepages.HomeProvider" android:readPermission="com.android.browser.permission.READ_HISTORY_BOOKMARKS"/>
+        <receiver android:name="com.asus.browser.PreloadRequestReceiver" android:permission="com.asus.browser.permission.PRELOAD">
+            <intent-filter>
+                <action android:name="android.intent.action.PRELOAD"/>
+                <data android:scheme="http"/>
+            </intent-filter>
+        </receiver>
+        <provider android:authorities="com.asus.browser.readerfiles" android:exported="false" android:name="com.asus.browser.provider.ReaderFilesProvider"/>
+        <activity android:configChanges="keyboardHidden|screenSize" android:label="@string/readerfileslist" android:name="com.asus.browser.ReaderFilesActivity" android:theme="@style/ReaderFilesTheme"/>
+        <activity android:configChanges="keyboardHidden|screenSize" android:name="com.asus.browser.FrontPageQuickAccessAddActivity" android:theme="@style/ComboViewTheme" android:windowSoftInputMode="adjustResize"/>
+        <activity android:configChanges="keyboardHidden|screenSize" android:name="com.asus.browser.FrontPageQuickAccessAddBookmarkActivity" android:theme="@style/ComboViewTheme" android:windowSoftInputMode="adjustResize"/>
+        <activity android:label="@string/pref_about_EULA" android:name="com.asus.browser.preferences.TrendMicroEULA">
+            <intent-filter>
+                <action android:name="com.asus.browser.preferences.TrendMicroEULA"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity android:configChanges="keyboardHidden|screenSize" android:name="com.asus.browser.SearchSelectActivity" android:theme="@style/SearchSelectTheme"/>
+        <activity android:label="@string/label_search_settings" android:name="com.asus.browser.SearchSettingsActivity" android:theme="@style/BrowserPreferenceTheme"/>
+        <activity android:label="@string/menu_preferences" android:name="com.asus.browser.search.SearchSettingsPreference" android:theme="@style/BrowserPreferenceTheme"/>
+        <receiver android:exported="true" android:name="com.asus.browser.DMRequestReceiver" android:permission="com.asus.browser.permission.BROWSER_PERMISSION">
+            <intent-filter android:priority="500">
+                <action android:name="com.asus.dm.action.SET_HOMEPAGE"/>
+                <action android:name="com.asus.dm.action.SET_BOOKMARKS"/>
+                <action android:name="com.asus.dm.action.GET_HOMEPAGE"/>
+                <action android:name="com.asus.dm.action.GET_BOOKMARKS"/>
+            </intent-filter>
+        </receiver>
+        <receiver android:exported="true" android:name="com.asus.browser.ATCommandRecevier" android:permission="com.asus.browser.permission.BROWSER_PERMISSION">
+            <intent-filter android:priority="500">
+                <action android:name="com.asus.intent.action.CACHE_SIZE"/>
+                <action android:name="com.asus.intent.action.COOKIES_NUM"/>
+                <action android:name="com.asus.intent.action.COOKIES_SIZE"/>
+            </intent-filter>
+        </receiver>
+        <receiver android:exported="true" android:name="com.asus.browser.FeedbackReceiver" android:permission="com.asus.browser.permission.BROWSER_PERMISSION">
+            <intent-filter>
+                <action android:name="com.asus.browser.intent.action.USERFEEDBACK"/>
+            </intent-filter>
+        </receiver>
+        <activity android:configChanges="keyboardHidden|orientation|screenSize" android:name="com.asus.browser.tutorial.ReaderModeTutorial" android:theme="@style/ActivityTransparentTheme"/>
+        <activity android:configChanges="keyboardHidden|orientation|screenSize" android:name="com.asus.browser.tutorial.SearchSelectTutorial" android:theme="@style/ActivityTransparentTheme"/>
+        <activity android:configChanges="keyboardHidden|orientation|screenSize" android:name="com.asus.browser.tutorial.ReaderModeTutorial2" android:theme="@style/ActivityTransparentTheme"/>
+        <activity android:configChanges="keyboardHidden|orientation|screenSize" android:name="com.asus.browser.tutorial.BottomBarTutorial" android:theme="@style/ActivityTransparentTheme"/>
+        <activity android:configChanges="keyboardHidden|orientation|screenSize" android:name="com.asus.browser.tutorial.AddBookmarkTutorial" android:theme="@style/ActivityTransparentTheme"/>
+        <activity android:configChanges="keyboardHidden|orientation|screenSize" android:name="com.asus.browser.tutorial.BookmarkTutorial" android:theme="@style/ActivityTransparentTheme"/>
+        <activity android:launchMode="singleTop" android:name="com.uservoice.uservoicesdk.activity.PortalActivity">
+            <meta-data android:name="android.app.searchable" android:resource="@xml/uf_sdk_searchable"/>
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH"/>
+            </intent-filter>
+        </activity>
+        <activity android:name="com.uservoice.uservoicesdk.activity.ForumActivity"/>
+        <activity android:name="com.uservoice.uservoicesdk.activity.ArticleActivity"/>
+        <activity android:name="com.uservoice.uservoicesdk.activity.TopicActivity"/>
+        <activity android:configChanges="keyboardHidden|orientation|screenSize" android:name="com.uservoice.uservoicesdk.activity.ContactActivity"/>
+        <activity android:configChanges="keyboardHidden|orientation|screenSize" android:name="com.uservoice.uservoicesdk.activity.PostIdeaActivity"/>
+        <provider android:authorities="com.asus.browser-classic.file" android:exported="false" android:grantUriPermissions="true" android:name="android.support.v4.content.FileProvider">
+            <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/file_paths"/>
+        </provider>
+        <service android:name="com.google.android.gms.analytics.CampaignTrackingService"/>
+        <receiver android:exported="true" android:name="com.google.android.gms.analytics.CampaignTrackingReceiver">
+            <intent-filter>
+                <action android:name="com.android.vending.INSTALL_REFERRER"/>
+            </intent-filter>
+        </receiver>
+        <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version"/>
+        <receiver android:enabled="true" android:exported="false" android:name="com.google.android.gms.analytics.AnalyticsReceiver">
+            <intent-filter>
+                <action android:name="com.google.android.gms.analytics.ANALYTICS_DISPATCH"/>
+            </intent-filter>
+        </receiver>
+        <service android:enabled="true" android:exported="false" android:name="com.google.android.gms.analytics.AnalyticsService"/>
+        <receiver android:name="com.asus.browser.UpgradeBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_REPLACED"/>
+                <data android:scheme="package"/>
+            </intent-filter>
+        </receiver>
+    </application>
+</manifest>

@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?><manifest xmlns:android="http://schemas.android.com/apk/res/android" android:sharedUserId="android.uid.email" package="com.asus.email">
+    <uses-feature android:name="asus.software.marketapp"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS"/>
+    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS"/>
+    <uses-permission android:name="android.permission.READ_CALENDAR"/>
+    <uses-permission android:name="android.permission.WRITE_CALENDAR"/>
+    <uses-permission android:name="android.permission.WRITE_CONTACTS"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.READ_PROFILE"/>
+    <uses-permission android:name="android.permission.WRITE_PROFILE"/>
+    <uses-permission android:name="android.permission.NFC"/>
+    <uses-permission android:name="android.permission.READ_TASK"/>
+    <uses-permission android:name="android.permission.WRITE_TASK"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.GET_TASKS"/>
+    <uses-permission android:name="android.permission.GET_PACKAGE_SIZE"/>
+    <uses-permission android:name="com.google.android.gallery3d.permission.GALLERY_PROVIDER"/>
+    <permission android:description="@string/permission_read_attachment_desc" android:label="@string/permission_read_attachment_label" android:name="com.asus.email.permission.READ_ATTACHMENT" android:permissionGroup="android.permission-group.MESSAGES" android:protectionLevel="signature"/>
+    <uses-permission android:name="com.asus.email.permission.READ_ATTACHMENT"/>
+    <uses-permission android:name="android.permission.USE_CREDENTIALS"/>
+    <permission android:description="@string/permission_access_provider_desc" android:label="@string/permission_access_provider_label" android:name="com.asus.email.permission.ACCESS_PROVIDER" android:protectionLevel="signature"/>
+    <uses-permission android:name="com.asus.email.permission.ACCESS_PROVIDER"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="com.android.launcher.permission.WRITE_SETTINGS"/>
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS"/>
+    <permission android:name="com.android.email.permission.ECHO" android:protectionLevel="signatureOrSystem"/>
+    <uses-permission android:name="com.android.email.permission.ECHO"/>
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+    <uses-permission android:name="android.permission.READ_SETTINGS"/>
+    <permission android:name="com.android.email.permission.ASUS_LIVE_DEMO_SERVICE" android:protectionLevel="signature"/>
+    <application android:allowBackup="false" android:hardwareAccelerated="true" android:icon="@mipmap/app_icon_release" android:label="@string/app_name" android:largeHeap="true" android:name="com.android.email.Email" android:theme="@style/EmailTheme">
+        <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version"/>
+        <meta-data android:name="com.google.android.wearable.beta.app" android:resource="@xml/wearable_app_desc"/>
+        <receiver android:enabled="true" android:name="com.android.email.service.EmailUpgradeBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED"/>
+            </intent-filter>
+        </receiver>
+        <activity android:name="com.android.email.activity.Welcome" android:theme="@style/EmailWelcomeColorfulActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.APP_EMAIL"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+                <data android:host="ui.email.asus.com" android:path="/view/mailbox" android:scheme="content"/>
+            </intent-filter>
+        </activity>
+        <activity android:exported="true" android:label="@string/account_setup_basics_title" android:name="com.android.email.activity.setup.AccountSetupBasics" android:theme="@style/EmailThemeWithDefaultUpIndicator">
+            <intent-filter>
+                <action android:name="com.asus.email.CREATE_ACCOUNT"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity android:configChanges="keyboardHidden|orientation|screenSize" android:exported="true" android:label="@string/account_setup_basics_title" android:name="com.android.email.activity.setup.GoogleOAuth2SetupChooser" android:theme="@style/EmailThemeWithDefaultUpIndicator"/>
+        <activity android:configChanges="keyboardHidden|orientation|screenSize" android:exported="true" android:label="@string/account_setup_basics_title" android:name="com.android.email.activity.setup.AccountOAuth2WebSetup" android:theme="@style/EmailThemeWithDefaultUpIndicator"/>
+        <activity android:exported="true" android:label="@string/account_setup_chooser_title" android:launchMode="singleTask" android:name="com.android.email.activity.setup.AccountSetupChooser" android:theme="@style/EmailThemeWithDefaultUpIndicator">
+            <intent-filter>
+                <action android:name="com.asus.email.CREATE_ACCOUNT_CHOOSER"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity android:label="@string/account_setup_account_type_title" android:name="com.android.email.activity.setup.AccountSetupAccountType" android:theme="@style/EmailThemeWithDefaultUpIndicator"/>
+        <activity android:label="@string/account_setup_incoming_title" android:name="com.android.email.activity.setup.AccountSetupIncoming" android:theme="@style/EmailThemeWithDefaultUpIndicator"/>
+        <activity android:label="@string/account_setup_outgoing_title" android:name="com.android.email.activity.setup.AccountSetupOutgoing" android:theme="@style/EmailThemeWithDefaultUpIndicator"/>
+        <activity android:label="@string/account_setup_exchange_title" android:name="com.android.email.activity.setup.AccountSetupExchange" android:theme="@style/EmailThemeWithDefaultUpIndicator"/>
+        <activity android:label="@string/account_setup_options_title" android:name="com.android.email.activity.setup.AccountSetupOptions" android:theme="@style/EmailThemeWithDefaultUpIndicator"/>
+        <activity android:label="@string/account_setup_names_title" android:name="com.android.email.activity.setup.AccountSetupNames" android:theme="@style/EmailThemeWithDefaultUpIndicator"/>
+        <activity android:label="@string/settings_activity_title" android:name="com.android.email.activity.setup.AccountSettings" android:theme="@style/EmailActionBar">
+            <intent-filter>
+                <action android:name="com.asus.email.activity.setup.ACCOUNT_MANAGER_ENTRY"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.EDIT"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:host="ui.email.asus.com" android:path="/settings" android:scheme="content"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.MANAGE_NETWORK_USAGE"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity android.label="@string/account_security_title" android:name="com.android.email.activity.setup.AccountSecurity"/>
+        <activity android:enabled="false" android:name="com.android.email.activity.ShortcutPicker" android:theme="@style/EmailColorfulActionBarTranslucentWithDefaultUpIndicator">
+            <intent-filter android:label="@string/account_shortcut_picker_name">
+                <action android:name="android.intent.action.CREATE_SHORTCUT"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity android:launchMode="singleTask" android:name="com.android.email.activity.EmailActivity" android:theme="@style/EmailActionBar">
+            <intent-filter>
+                <action android:name="com.asus.email.activity.EmailActivity.ViewMessage"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.asus.email.activity.EmailActivity.AutoReply"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH"/>
+            </intent-filter>
+            <meta-data android:name="android.app.searchable" android:resource="@xml/searchable"/>
+        </activity>
+        <activity android:name="com.android.email.activity.MessageFileView">
+            <intent-filter android:label="@string/app_name">
+                <action android:name="android.intent.action.VIEW"/>
+                <data android:mimeType="application/eml"/>
+                <data android:mimeType="message/rfc822"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity android:enabled="false" android:label="@string/compose_title" android:name="com.android.email.activity.MessageCompose" android:theme="@style/EmailActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.SENDTO"/>
+                <data android:scheme="mailto"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+            </intent-filter>
+            <intent-filter android:label="@string/app_name">
+                <action android:name="android.intent.action.SEND"/>
+                <data android:mimeType="*/*"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+            <intent-filter android:label="@string/app_name">
+                <action android:name="android.intent.action.SEND_MULTIPLE"/>
+                <data android:mimeType="*/*"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.asus.email.intent.action.REPLY"/>
+            </intent-filter>
+        </activity>
+        <activity android:name="com.android.email.chips.EditChipsActivity" android:theme="@style/EmailActionBar"/>
+        <activity android:name="com.android.email.activity.MessageList">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+            </intent-filter>
+        </activity>
+        <activity android:label="@string/move_to_folder_dialog_title" android:name="com.android.email.activity.MoveMessageToActivity" android:theme="@style/EmailActionBar"/>
+        <activity android:label="@string/mailbox_settings_activity_title" android:name="com.android.email.activity.setup.MailboxSettings" android:theme="@style/EmailActionBar"/>
+        <activity android:label="@string/account_settings_mail_check_frequency_label" android:name="com.android.email.activity.setup.InboxCheckFrequencyActivity" android:theme="@style/EmailActionBar"/>
+        <activity android:name="com.android.email.activity.EncourageUsActivity" android:theme="@style/EmailTansparentTheme"/>
+        <receiver android:enabled="true" android:name="com.android.email.service.AttachmentDownloadService$Watchdog"/>
+        <receiver android:enabled="true" android:name="com.android.email.service.EmailBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.DEVICE_STORAGE_LOW"/>
+                <action android:name="android.intent.action.DEVICE_STORAGE_OK"/>
+                <action android:name="android.accounts.LOGIN_ACCOUNTS_CHANGED"/>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SECRET_CODE"/>
+                <data android:host="36245" android:scheme="android_secret_code"/>
+            </intent-filter>
+        </receiver>
+        <service android:name="com.android.email.service.EmailBroadcastProcessorService"/>
+        <service android:name="com.android.email.service.AsusWidgetRefreshService"/>
+        <service android:name="com.android.email.wear.WearEmailControllerService">
+            <intent-filter>
+                <action android:name="com.google.android.gms.wearable.BIND_LISTENER"/>
+            </intent-filter>
+        </service>
+        <receiver android:description="@string/device_admin_description" android:label="@string/device_admin_label" android:name="com.android.email.SecurityPolicy$PolicyAdmin" android:permission="android.permission.BIND_DEVICE_ADMIN">
+            <meta-data android:name="android.app.device_admin" android:resource="@xml/device_admin"/>
+            <intent-filter>
+                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED"/>
+            </intent-filter>
+        </receiver>
+        <service android:enabled="false" android:name="com.android.email.service.MailService"/>
+        <service android:enabled="true" android:name="com.android.email.Controller$ControllerService"/>
+        <service android:enabled="false" android:name="com.android.email.service.AttachmentDownloadService"/>
+        <service android:enabled="true" android:name="com.android.email.service.MessageFetchService"/>
+        <service android:enabled="true" android:exported="true" android:name="com.android.email.service.PopImapAuthenticatorService">
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator"/>
+            </intent-filter>
+            <meta-data android:name="android.accounts.AccountAuthenticator" android:resource="@xml/pop_imap_authenticator"/>
+        </service>
+        <service android:enabled="false" android:exported="true" android:name="com.android.email.service.LegacyPopImapAuthenticatorService">
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator"/>
+            </intent-filter>
+            <meta-data android:name="android.accounts.AccountAuthenticator" android:resource="@xml/legacy_pop_imap_authenticator"/>
+        </service>
+        <service android:exported="true" android:name="com.android.email.service.PopImapSyncAdapterService">
+            <intent-filter>
+                <action android:name="android.content.SyncAdapter"/>
+            </intent-filter>
+            <meta-data android:name="android.content.SyncAdapter" android:resource="@xml/syncadapter_pop_imap"/>
+        </service>
+        <service android:enabled="true" android:name="com.android.email.service.PolicyService" android:permission="com.asus.email.permission.ACCESS_PROVIDER"/>
+        <service android:enabled="true" android:name="com.android.email.service.AccountService" android:permission="com.asus.email.permission.ACCESS_PROVIDER"/>
+        <service android:enabled="true" android:exported="true" android:name="com.android.email.service.EasAuthenticatorService">
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator"/>
+            </intent-filter>
+            <meta-data android:name="android.accounts.AccountAuthenticator" android:resource="@xml/eas_authenticator"/>
+        </service>
+        <service android:enabled="false" android:exported="true" android:name="com.android.email.service.LegacyEasAuthenticatorService">
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator"/>
+            </intent-filter>
+            <meta-data android:name="android.accounts.AccountAuthenticator" android:resource="@xml/legacy_eas_authenticator"/>
+        </service>
+        <service android:enabled="false" android:exported="true" android:name="com.android.email.service.EasTestAuthenticatorService">
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator"/>
+            </intent-filter>
+            <meta-data android:name="android.accounts.AccountAuthenticator" android:resource="@xml/eastest_authenticator"/>
+        </service>
+        <service android:enabled="false" android:exported="true" android:name="com.android.email.service.EasAuthenticatorServiceAlternate">
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator"/>
+            </intent-filter>
+            <meta-data android:name="android.accounts.AccountAuthenticator" android:resource="@xml/authenticator_alternate"/>
+        </service>
+        <service android:enabled="false" android:exported="true" android:name="com.android.email.service.LegacyEasAuthenticatorServiceAlternate">
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator"/>
+            </intent-filter>
+            <meta-data android:name="android.accounts.AccountAuthenticator" android:resource="@xml/legacy_authenticator_alternate"/>
+        </service>
+        <provider android:authorities="com.asus.email.attachmentprovider" android:exported="true" android:grantUriPermissions="true" android:multiprocess="false" android:name="com.android.email.provider.AttachmentProvider" android:readPermission="com.asus.email.permission.READ_ATTACHMENT"/>
+        <provider android:authorities="com.asus.email.provider;com.asus.email.notifier" android:exported="true" android:label="@string/app_name" android:multiprocess="false" android:name="com.android.email.provider.EmailProvider" android:permission="com.asus.email.permission.ACCESS_PROVIDER"/>
+        <receiver android:name="com.android.email.widget.AsusWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+                <action android:name="android.intent.action.LOCALE_CHANGED"/>
+                <action android:name="com.asus.email.MESSAGE_LIST_DATASET_CHANGED"/>
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/asus_widget_provider"/>
+        </receiver>
+        <service android:name="com.android.email.widget.AsusWidgetServiceV2"/>
+        <activity android:enabled="true" android:name="com.android.email.widget.WidgetConfiguration" android:theme="@android:style/Theme.DeviceDefault.Light.DialogWhenLarge">
+            <intent-filter android:label="@string/account_shortcut_picker_name">
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity android:launchMode="singleTop" android:name="com.uservoice.uservoicesdk.activity.PortalActivity">
+            <meta-data android:name="android.app.searchable" android:resource="@xml/uf_sdk_searchable"/>
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH"/>
+            </intent-filter>
+        </activity>
+        <activity android:name="com.uservoice.uservoicesdk.activity.ForumActivity"/>
+        <activity android:name="com.uservoice.uservoicesdk.activity.ArticleActivity"/>
+        <activity android:name="com.uservoice.uservoicesdk.activity.TopicActivity"/>
+        <activity android:configChanges="keyboardHidden|orientation|screenSize" android:name="com.uservoice.uservoicesdk.activity.ContactActivity"/>
+        <activity android:configChanges="keyboardHidden|orientation|screenSize" android:name="com.uservoice.uservoicesdk.activity.PostIdeaActivity"/>
+        <service android:exported="false" android:name="com.android.email.provider.WidgetProvider$WidgetService" android:permission="android.permission.BIND_REMOTEVIEWS"/>
+        <receiver android:name="com.android.email.provider.WidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.asus.email.MESSAGE_LIST_DATASET_CHANGED"/>
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_info"/>
+        </receiver>
+        <provider android:authorities="com.asus.email.directory.provider" android:exported="true" android:multiprocess="false" android:name="com.android.email.provider.RecentSentProvider">
+            <meta-data android:name="android.content.ContactDirectory" android:value="true"/>
+        </provider>
+        <receiver android:exported="false" android:name="com.android.email.service.LauncherBadgeUpdateReceiver">
+            <intent-filter>
+                <action android:name="com.asus.email.MESSAGE_LIST_DATASET_CHANGED"/>
+                <action android:name="com.android.email.MESSAGE_LIST_DATASET_CHANGED"/>
+            </intent-filter>
+        </receiver>
+        <service android:exported="true" android:name="com.android.email.EmailEchoService" android:permission="com.android.email.permission.ECHO"/>
+        <service android:exported="true" android:name="com.android.email.service.EmailAirWindowService"/>
+        <receiver android:name="com.android.exchange.EmailSyncAlarmReceiver" android:process=":exchange"/>
+        <receiver android:name="com.android.exchange.MailboxAlarmReceiver" android:process=":exchange"/>
+        <receiver android:enabled="true" android:name="com.android.exchange.service.ExchangeBroadcastReceiver" android:process=":exchange">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.DEVICE_STORAGE_LOW"/>
+                <action android:name="android.intent.action.DEVICE_STORAGE_OK"/>
+                <action android:name="android.accounts.LOGIN_ACCOUNTS_CHANGED"/>
+            </intent-filter>
+        </receiver>
+        <service android:name="com.android.exchange.service.ExchangeBroadcastProcessorService" android:process=":exchange"/>
+        <service android:exported="true" android:name="com.android.exchange.EmailSyncAdapterService" android:process=":exchange">
+            <intent-filter>
+                <action android:name="android.content.SyncAdapter"/>
+            </intent-filter>
+            <meta-data android:name="android.content.SyncAdapter" android:resource="@xml/syncadapter_email"/>
+        </service>
+        <service android:exported="true" android:name="com.android.exchange.ContactsSyncAdapterService" android:process=":exchange">
+            <intent-filter>
+                <action android:name="android.content.SyncAdapter"/>
+            </intent-filter>
+            <meta-data android:name="android.content.SyncAdapter" android:resource="@xml/syncadapter_contacts"/>
+            <meta-data android:name="android.provider.CONTACTS_STRUCTURE" android:resource="@xml/contacts"/>
+        </service>
+        <service android:exported="true" android:name="com.android.exchange.CalendarSyncAdapterService" android:process=":exchange">
+            <intent-filter>
+                <action android:name="android.content.SyncAdapter"/>
+            </intent-filter>
+            <meta-data android:name="android.content.SyncAdapter" android:resource="@xml/syncadapter_calendar"/>
+        </service>
+        <service android:exported="true" android:name="com.android.exchange.TaskSyncAdapterService" android:process=":exchange">
+            <intent-filter>
+                <action android:name="android.content.SyncAdapter"/>
+            </intent-filter>
+            <meta-data android:name="android.content.SyncAdapter" android:resource="@xml/syncadapter_task"/>
+        </service>
+        <service android:enabled="true" android:name="com.android.exchange.ExchangeService" android:permission="com.asus.email.permission.ACCESS_PROVIDER" android:process=":exchange"/>
+        <provider android:authorities="com.asus.exchange.directory.provider" android:exported="true" android:multiprocess="false" android:name="com.android.exchange.provider.ExchangeDirectoryProvider" android:process=":exchange" android:readPermission="android.permission.READ_CONTACTS">
+            <meta-data android:name="android.content.ContactDirectory" android:value="true"/>
+        </provider>
+        <activity android:name="com.android.exchange.EasCertificateRequestor">
+            <intent-filter>
+                <action android:name="com.asus.emailcommon.REQUEST_CERT"/>
+                <data android:path="/certrequest" android:scheme="eas"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity android:name="com.android.exchange.SettingsRedirector">
+            <intent-filter>
+                <action android:name="android.intent.action.MANAGE_NETWORK_USAGE"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <service android:enabled="true" android:exported="true" android:name="com.android.email.service.Ready2GoAccountService">
+            <intent-filter>
+                <action android:name="com.asus.email.intent.action.R2G_REQUEST_VERIFY_ACCOUNT"/>
+                <action android:name="com.asus.email.intent.action.R2G_CONTINUE_CREATE_ACCOUNT"/>
+                <action android:name="com.asus.email.intent.action.R2G_CANCEL_VERIFY_ACCOUNT"/>
+            </intent-filter>
+        </service>
+        <service android:enabled="true" android:exported="true" android:name="com.asus.dummyemail.server.DummyEmailServer" android:permission="com.android.email.permission.ASUS_LIVE_DEMO_SERVICE">
+            <intent-filter>
+                <action android:name="com.android.email.service.DummyEmailServer"/>
+            </intent-filter>
+        </service>
+        <activity android:label="@string/app_name" android:name="com.android.email.photoviewer.PhotoViewActivity" android:theme="@style/PhotoViewTheme"/>
+        <provider android:authorities="com.asus.email.photoviewprovider" android:exported="false" android:name="com.android.email.provider.PhotoViewProvider"/>
+        <service android:name="com.android.email.utils.CheckApkExistenceService"/>
+        <service android:name="com.google.android.gms.analytics.CampaignTrackingService"/>
+        <receiver android:exported="true" android:name="com.google.android.gms.analytics.CampaignTrackingReceiver">
+            <intent-filter>
+                <action android:name="com.android.vending.INSTALL_REFERRER"/>
+            </intent-filter>
+        </receiver>
+        <service android:enabled="true" android:exported="false" android:name="com.google.android.gms.analytics.AnalyticsService"/>
+        <receiver android:enabled="true" android:name="com.google.android.gms.analytics.AnalyticsReceiver">
+            <intent-filter>
+                <action android:name="com.google.android.gms.analytics.ANALYTICS_DISPATCH"/>
+            </intent-filter>
+        </receiver>
+        <receiver android:enabled="true" android:exported="false" android:name="com.android.email.NotificationController$DeleteReceiver">
+            <intent-filter>
+                <action android:name="com.android.email.NotificationController.delete_filter"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.android.email.NotificationController.cancel_delete"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.android.email.NotificationController.wearable_delete_filter"/>
+            </intent-filter>
+        </receiver>
+        <service android:enabled="true" android:exported="false" android:name="com.android.email.NotificationController$DeleteServices"/>
+        <receiver android:name="com.android.email.utils.BatteryOptimizationReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED"/>
+                <action android:name="android.intent.action.TIME_SET"/>
+                <action android:name="android.intent.action.TIMEZONE_CHANGED"/>
+            </intent-filter>
+        </receiver>
+    </application>
+</manifest>

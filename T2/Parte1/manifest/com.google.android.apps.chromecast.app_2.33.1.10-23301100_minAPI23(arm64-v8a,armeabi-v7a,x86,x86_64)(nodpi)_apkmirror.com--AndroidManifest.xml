@@ -1,0 +1,743 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?><manifest xmlns:android="http://schemas.android.com/apk/res/android" android:compileSdkVersion="30" android:compileSdkVersionCodename="11" package="com.google.android.apps.chromecast.app" platformBuildVersionCode="30" platformBuildVersionName="11">
+    <permission android:name="com.google.android.apps.chromecast.app.permission.DISCOVER_DEVICES" android:protectionLevel="signature"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission-sdk-23 android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"/>
+    <uses-feature android:name="android.hardware.telephony" android:required="false"/>
+    <uses-feature android:name="android.hardware.wifi" android:required="true"/>
+    <uses-feature android:name="android.hardware.bluetooth_le" android:required="false"/>
+    <uses-feature android:name="android.hardware.location.gps" android:required="false"/>
+    <uses-feature android:name="android.hardware.camera" android:required="false"/>
+    <uses-feature android:name="android.hardware.camera.autofocus" android:required="false"/>
+    <queries>
+        <package android:name="com.google.android.googlequicksearchbox"/>
+        <package android:name="com.google.android.apps.photos"/>
+        <intent>
+            <action android:name="android.intent.action.DIAL"/>
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.DIAL"/>
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.DIAL"/>
+        </intent>
+        <package android:name="com.google.android.apps.tachyon"/>
+        <package android:name="com.google.android.googlequicksearchbox"/>
+        <package android:name="com.google.android.googlequicksearchbox"/>
+        <package android:name="com.sling"/>
+        <intent>
+            <action android:name="android.intent.action.VIEW"/>
+            <category android:name="android.intent.category.BROWSABLE"/>
+            <data android:scheme="https"/>
+        </intent>
+        <package android:name="com.android.chrome"/>
+        <intent>
+            <action android:name="android.intent.action.VIEW"/>
+            <category android:name="android.intent.category.BROWSABLE"/>
+            <data android:host="www.example.com" android:scheme="http"/>
+        </intent>
+        <intent>
+            <action android:name="android.support.customtabs.action.CustomTabsService"/>
+        </intent>
+    </queries>
+    <uses-feature android:glEsVersion="0x00020000" android:required="true"/>
+    <application android:allowBackup="true" android:fullBackupContent="@xml/backup_rules" android:fullBackupOnly="false" android:icon="@mipmap/product_logo_google_home_launcher_color_48" android:label="@string/app_name" android:name="com.google.android.apps.chromecast.app.HomeApplication" android:networkSecurityConfig="@xml/network_security_config" android:restoreAnyVersion="false" android:roundIcon="@mipmap/product_logo_google_home_round_launcher_color_48" android:supportsRtl="true" android:theme="@style/AppTheme.SolidStatusBar" android:usesCleartextTraffic="true">
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+        <meta-data android:name="com.facebook.sdk.AutoLogAppEventsEnabled" android:value="false"/>
+        <meta-data android:name="com.facebook.sdk.AutoInitEnabled" android:value="false"/>
+        <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version"/>
+        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyDAg4ny6lmd4KjOLVrL51U5VGZfvnlwtXM"/>
+        <meta-data android:name="android.max_aspect" android:value="2.1"/>
+        <meta-data android:name="preloaded_fonts" android:resource="@array/preloaded_fonts"/>
+        <meta-data android:name="com.google.firebase.ml.vision.DEPENDENCIES" android:value="barcode"/>
+        <service android:enabled="false" android:exported="false" android:name="com.google.android.gms.metadata.ModuleDependencies">
+            <intent-filter>
+                <action android:name="com.google.android.gms.metadata.MODULE_DEPENDENCIES"/>
+            </intent-filter>
+            <meta-data android:name="vision.barcode:1:preferred" android:value=""/>
+        </service>
+        <provider android:authorities="com.google.android.apps.chromecast.app.camerafileprovider" android:exported="false" android:grantUriPermissions="true" android:name="com.google.android.apps.chromecast.app.setup.common.CameraFileProvider">
+            <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/file_paths"/>
+        </provider>
+        <activity android:exported="true" android:name="com.google.android.apps.chromecast.app.deeplink.DeeplinkActivity" android:theme="@style/AppTheme.Launcher">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:host="device" android:pathPrefix="/remotecontrol" android:scheme="googlehome"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:host="controller" android:scheme="googlehome"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:host="devices" android:scheme="googlehome"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:host="structures" android:scheme="googlehome"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:host="invite-to-structure" android:scheme="googlehome"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:host="nest-aware" android:pathPrefix="/non-payer" android:scheme="googlehome"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:host="nest-aware" android:pathPrefix="/hanging-subscriptions" android:scheme="googlehome"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:host="nest-aware" android:pathPrefix="/3p-hanging-subscriptions" android:scheme="googlehome"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:host="nest-aware" android:pathPrefix="/extend-video-history" android:scheme="googlehome"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:host="signup" android:pathPrefix="/nest-aware" android:scheme="googlehome"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:host="setup" android:pathPrefix="/nest-aware" android:scheme="googlehome"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:host="setup" android:pathPrefix="/device/" android:scheme="googlehome"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:host="setup" android:pathPrefix="/nest-aware/hanging-subscription-apply" android:scheme="googlehome"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:host="setup" android:pathPrefix="/duo_account" android:scheme="googlehome"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:host="setup" android:pathPrefix="/ha_linking" android:scheme="googlehome"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:host="setup" android:pathPrefix="/gal" android:scheme="googlehome"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:host="setup" android:pathPrefix="/smartring" android:scheme="googlehome"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:host="fsi" android:scheme="googlehome"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:host="assistantkit" android:scheme="googlehome"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:host="appdownload" android:scheme="googlehome"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:host="settings" android:scheme="googlehome"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:host="homeview" android:scheme="googlehome"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:host="feed" android:scheme="googlehome"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:host="feed" android:pathPrefix="/feedback" android:scheme="googlehome"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:host="history" android:scheme="googlehome"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:host="camera_immersive" android:scheme="googlehome"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:host="doorbell_event" android:scheme="googlehome"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:host="camera_event" android:scheme="googlehome"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:host="wifi" android:pathPrefix="/primary-network-settings" android:scheme="googlehome"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:host="wifi" android:pathPrefix="/station-list" android:scheme="googlehome"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:host="wifi" android:pathPrefix="/family-wifi" android:scheme="googlehome"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:host="com.google.android.apps.chromecast.app" android:pathPrefix="/unifiedSettings" android:scheme="http"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:host="creategroup" android:scheme="googlehome"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.google.android.apps.chromecast.app.DEVICES"/>
+                <action android:name="com.google.android.apps.chromecast.app.CREATE_GROUP"/>
+                <action android:name="com.google.android.apps.chromecast.app.DEVICE_SETTINGS"/>
+                <action android:name="com.google.android.apps.chromecast.app.BACKDROP_SETTINGS"/>
+                <action android:name="com.google.android.apps.chromecast.app.DEVICE_SETUP"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:host="sharesheet" android:scheme="googlehome"/>
+            </intent-filter>
+        </activity>
+        <activity-alias android:enabled="true" android:exported="true" android:label="@string/app_name" android:name="com.google.android.apps.chromecast.app.DiscoveryActivity" android:targetActivity="com.google.android.apps.chromecast.app.deeplink.DeeplinkActivity">
+            <meta-data android:name="activityAliasIdentifier" android:value="DiscoveryActivity"/>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:host="chromecast.com" android:scheme="comgooglecast"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.google.android.apps.chromecast.app.DEVICE_NOTIFICATION"/>
+            </intent-filter>
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:host="madeby.google.com" android:path="/get-app/watch" android:scheme="https"/>
+                <data android:host="madeby.google.com" android:path="/get-app/discover" android:scheme="https"/>
+                <data android:host="madeby.google.com" android:path="/home-app/" android:scheme="https"/>
+            </intent-filter>
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:host="email-prefs" android:scheme="googlehome"/>
+            </intent-filter>
+        </activity-alias>
+        <meta-data android:name="com.google.android.gms.cast.framework.OPTIONS_PROVIDER_CLASS_NAME" android:value="com.google.android.apps.chromecast.app.learn.LearnCastOptionsProvider"/>
+        <receiver android:enabled="true" android:exported="false" android:name="com.google.android.gms.measurement.AppMeasurementReceiver"/>
+        <service android:enabled="true" android:exported="false" android:name="com.google.android.gms.measurement.AppMeasurementService"/>
+        <service android:enabled="true" android:exported="false" android:name="com.google.android.gms.measurement.AppMeasurementJobService" android:permission="android.permission.BIND_JOB_SERVICE"/>
+        <meta-data android:name="com.google.android.gms.phenotype.registration.xml:com.google.android.apps.chromecast.app" android:resource="@xml/com_google_android_apps_chromecast_app_phenotype_release"/>
+        <service android:enabled="false" android:exported="false" android:name="com.google.android.libraries.phenotype.registration.PhenotypeMetadataHolderService" android:process="">
+            <intent-filter>
+                <action android:name="com.google.android.libraries.phenotype.registration.PhenotypeMetadataHolderService"/>
+            </intent-filter>
+            <meta-data android:name="com.google.android.gms.phenotype.registration.binarypb:com.google.android.apps.chromecast.app" android:resource="@raw/com_google_android_apps_chromecast_app_registration_info_release"/>
+            <meta-data android:name="com.google.android.gms.phenotype.registration.binarypb:com.google.android.libraries.onegoogle" android:resource="@raw/com_google_android_libraries_onegoogle_registration_info"/>
+            <meta-data android:name="com.google.android.gms.phenotype.registration.binarypb:com.google.android.libraries.performance.primes" android:resource="@raw/com_google_android_libraries_performance_primes_registration_info"/>
+        </service>
+        <meta-data android:name="com.google.android.gms.phenotype.registration.xml:com.google.android.libraries.onegoogle" android:resource="@xml/com_google_android_libraries_onegoogle_phenotype"/>
+        <meta-data android:name="com.google.android.gms.phenotype.registration.xml:com.google.android.libraries.performance.primes" android:resource="@xml/com_google_android_libraries_performance_primes_phenotype"/>
+        <activity android:exported="false" android:launchMode="singleTask" android:name="com.google.android.apps.chromecast.app.address.HomeAddressActivity"/>
+        <activity android:exported="false" android:launchMode="singleTask" android:name="com.google.android.apps.chromecast.app.address.HomeAddressWidgetActivity"/>
+        <activity android:exported="false" android:label="@string/device_setup_title" android:name="com.google.android.apps.chromecast.app.agsa.AgsaTrampolineActivity"/>
+        <activity android:exported="false" android:launchMode="singleTask" android:name="com.google.android.apps.chromecast.app.agsa.InterstitialActivity"/>
+        <activity android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize" android:exported="false" android:label="@string/app_name" android:name="com.facebook.FacebookActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+        <activity android:exported="false" android:launchMode="singleTop" android:name="com.google.android.apps.chromecast.app.camera.event.CameraEventDetailsActivity" android:theme="@style/CameraEventDetailsTheme"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.camera.familiarfaces.FamiliarFacesActivity" android:theme="@style/FamiliarFacesTheme"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.camera.familiarfaces.FamiliarFacesNamingActivity" android:theme="@style/FamiliarFacesTheme" android:windowSoftInputMode="stateAlwaysVisible"/>
+        <activity android:exported="false" android:launchMode="singleTop" android:name="com.google.android.apps.chromecast.app.camera.familiarfaces.FamiliarFacesDetailActivity" android:theme="@style/FamiliarFacesTheme"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.camera.immersive.CameraImmersiveActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.concierge.ConciergeMainActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.concierge.flows.hangingsubs.ApplyHangingSubsActivity"/>
+        <activity android:configChanges="orientation|screenSize" android:exported="false" android:name="com.google.android.apps.chromecast.app.concierge.flows.setup.modules.sdm.ResourcePickerActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.concierge.flows.setup.modules.wwga.WWGAActivity"/>
+        <activity android:exported="false" android:label="@string/drawer_item_offers" android:name="com.google.android.apps.chromecast.app.contentdiscovery.offers.OffersActivity"/>
+        <activity android:exported="false" android:label="@string/device_setup_title" android:name="com.google.android.apps.chromecast.app.devicebootstrap.BootstrapSetupHostActivity"/>
+        <activity android:exported="false" android:label="@string/device_setup_title" android:name="com.google.android.apps.chromecast.app.devicebootstrap.flux.BootstrapSetupFluxActivity"/>
+        <receiver android:exported="true" android:name="com.google.android.apps.chromecast.app.devices.discovery.DeviceDiscoveryBroadcastReceiver" android:permission="com.google.android.apps.chromecast.app.permission.DISCOVER_DEVICES">
+            <intent-filter>
+                <action android:name="com.google.android.apps.chromecast.app.DISCOVER_DEVICES"/>
+            </intent-filter>
+        </receiver>
+        <activity android:exported="false" android:label="@string/drawer_item_emergency_call" android:launchMode="singleTask" android:name="com.google.android.apps.chromecast.app.emergency.EmergencyCallActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.familytools.FamilyToolsSettingsActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.familytools.FamilyToolsHostActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.feed.SoundSensingDetailActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.feed.feedback.FeedFeedbackActivity" android:windowSoftInputMode="adjustResize"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.feed.thermostat.ThermostatSevereAlertDetailsActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.feed.thermostat.ThermostatFoundSavingsActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.feed.thermostat.ThermostatSeasonalSavingsActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.feedback.FeedbackActivity" android:theme="@style/AppTheme.SolidStatusBar"/>
+        <activity android:configChanges="orientation|screenSize" android:exported="false" android:label="@string/menu_discover_help" android:name="com.google.android.apps.chromecast.app.feedback.HelpActivity" android:uiOptions="splitActionBarWhenNarrow">
+            <meta-data android:name="android.support.UI_OPTIONS" android:value="splitActionBarWhenNarrow"/>
+        </activity>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.feedback.HelpDeviceCategoryPickerActivity"/>
+        <provider android:authorities="com.google.android.apps.chromecast.app.firebaseinitprovider" android:directBootAware="true" android:exported="false" android:initOrder="100" android:name="com.google.firebase.provider.FirebaseInitProvider"/>
+        <service android:directBootAware="true" android:exported="false" android:name="com.google.firebase.components.ComponentDiscoveryService">
+            <meta-data android:name="com.google.firebase.components:com.google.firebase.dynamiclinks.internal.FirebaseDynamicLinkRegistrar" android:value="com.google.firebase.components.ComponentRegistrar"/>
+            <meta-data android:name="com.google.firebase.components:com.google.firebase.analytics.connector.internal.AnalyticsConnectorRegistrar" android:value="com.google.firebase.components.ComponentRegistrar"/>
+            <meta-data android:name="com.google.firebase.components:com.google.firebase.iid.Registrar" android:value="com.google.firebase.components.ComponentRegistrar"/>
+            <meta-data android:name="com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsRegistrar" android:value="com.google.firebase.components.ComponentRegistrar"/>
+            <meta-data android:name="com.google.firebase.components:com.google.firebase.messaging.FirebaseMessagingRegistrar" android:value="com.google.firebase.components.ComponentRegistrar"/>
+        </service>
+        <activity android:exported="false" android:label="@string/first_launch_activity_label" android:name="com.google.android.apps.chromecast.app.firstlaunch.FirstLaunchWizardActivity"/>
+        <service android:exported="false" android:name="com.google.android.apps.chromecast.app.gcm.CastGcmListenerService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+        <activity android:excludeFromRecents="true" android:exported="false" android:launchMode="singleTask" android:name="com.google.android.apps.chromecast.app.gdi.GdiLauncherActivity" android:theme="@style/Theme.AppCompat.NoActionBar.Translucent"/>
+        <activity android:excludeFromRecents="true" android:exported="false" android:launchMode="singleTask" android:name="com.google.android.apps.chromecast.app.gdi.GalLauncherActivity" android:theme="@style/Theme.AppCompat.NoActionBar.Translucent"/>
+        <activity android:autoVerify="true" android:excludeFromRecents="true" android:exported="true" android:launchMode="singleTask" android:name="net.openid.appauth.RedirectUriReceiverActivity" android:process="" android:theme="@android:style/Theme.Translucent.NoTitleBar">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:host="gdiredirect" android:scheme="comgooglecast"/>
+            </intent-filter>
+        </activity>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.gf.healthcheck.GeofenceHealthCheckActivity"/>
+        <receiver android:exported="true" android:name="com.google.android.apps.chromecast.app.gf.maintenance.GeofenceSystemChangeBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.location.PROVIDERS_CHANGED"/>
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_DATA_CLEARED"/>
+                <data android:scheme="package" android:sspPrefix="com.google.android.gms"/>
+            </intent-filter>
+        </receiver>
+        <service android:exported="false" android:name="com.google.android.apps.chromecast.app.gf.maintenance.GeofenceLocationServiceChangeJobService" android:permission="android.permission.BIND_JOB_SERVICE"/>
+        <service android:exported="false" android:name="com.google.android.apps.chromecast.app.gf.maintenance.GeofenceMaintenanceService" android:permission="android.permission.BIND_JOB_SERVICE"/>
+        <service android:enabled="true" android:exported="false" android:name="com.google.android.apps.chromecast.app.gf.report.GeofenceTransitionReportingService"/>
+        <receiver android:exported="true" android:name="com.google.android.apps.chromecast.app.gf.repository.GeofenceTransitionBroadcastReceiver">
+            <intent-filter>
+                <action android:name="com.google.android.apps.chromecast.app.gf.GF_TRANSITION"/>
+            </intent-filter>
+        </receiver>
+        <activity android:exported="false" android:label="@string/home_occupancy_name" android:name="com.google.android.apps.chromecast.app.gf.settings.view.GeofencingHostActivity"/>
+        <activity android:exported="false" android:label="@string/presence_settings_title" android:name="com.google.android.apps.chromecast.app.gf.settings.view.PresenceSettingsActivity"/>
+        <activity android:exported="false" android:launchMode="singleTop" android:name="com.google.android.apps.chromecast.app.history.HomeHistoryActivity" android:theme="@style/HomeHistoryTheme"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.home.wizardcomponents.CreateHomeWizardActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.home.wizardcomponents.DeviceHomeSelectorWizardActivity"/>
+        <activity android:configChanges="orientation|screenSize" android:exported="false" android:name="com.google.android.apps.chromecast.app.homemanagement.entityview.RoomEntityActivity"/>
+        <activity android:configChanges="orientation|screenSize" android:exported="false" android:name="com.google.android.apps.chromecast.app.homemanagement.entityview.GroupEntityActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.homemanagement.entityview.OtherDevicesActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.homemanagement.entityview.LinkedDevicesActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.homemanagement.entityview.DeviceGroupsActivity"/>
+        <activity android:configChanges="orientation|screenSize" android:exported="false" android:name="com.google.android.apps.chromecast.app.homemanagement.entityview.NearbyDevicesActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.homemanagement.group.CreateGroupActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.homemanagement.group.GroupDeviceSelectorActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.homemanagement.linkingeducation.QuerySuggestionActivity"/>
+        <activity android:configChanges="keyboardHidden|orientation|screenLayout|screenSize" android:exported="false" android:name="com.google.android.apps.chromecast.app.homemanagement.linkingeducation.video.YouTubeVideoHostActivity"/>
+        <activity android:exported="false" android:label="@string/managers_title" android:name="com.google.android.apps.chromecast.app.homemanagement.managers.ManagersActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.homemanagement.managers.ConfirmManagerActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.homemanagement.AddDeviceFlowActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.homemanagement.PendingInvitationPickerActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.homemanagement.RequestInviteFlowActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.homemanagement.ThirdPartyDeviceEntityActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.homemanagement.room.RoomDeviceSelectorActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.homemanagement.room.BatchRoomAssignmentActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.homemanagement.settings.HomeSettingsActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.homemanagement.settings.DeleteStructureActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.homemanagement.settings.DeviceTypeSelectorActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.homemanagement.settings.placement.DevicePlacementSettingsHostActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.homemanagement.userroles.UserRolesActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.homemanagement.userroles.InviteUserActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.homemanagement.userroles.AccessSummaryActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.homemanagement.userroles.ViewDevicesActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.homemanagement.userroles.ViewPeopleActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.homemanagement.userroles.ViewManagerAccessDescriptionActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.learn.LearnMediaBrowserActivity" android:taskAffinity=".learn" android:theme="@style/Theme.LearnBrowserTheme"/>
+        <activity android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|uiMode" android:exported="false" android:name="com.google.android.apps.chromecast.app.learn.LearnMediaPlayerActivity" android:taskAffinity=".learn" android:theme="@style/Theme.LearnPlayerTheme"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.learn.LearnTutorialCompleteActivity" android:noHistory="true" android:taskAffinity=".learn"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.learn.LearnNetworkErrorActivity"/>
+        <activity android:exported="false" android:launchMode="singleTask" android:name="com.google.android.apps.chromecast.app.main.MainActivity"/>
+        <activity-alias android:enabled="true" android:exported="false" android:name="com.google.android.apps.chromecast.app.core.MainActivity" android:targetActivity="com.google.android.apps.chromecast.app.main.MainActivity">
+            <meta-data android:name="activityAliasIdentifier" android:value="core.MainActivity"/>
+        </activity-alias>
+        <activity android:exported="false" android:launchMode="singleTask" android:name="com.google.android.apps.chromecast.app.main.ShortcutProxyActivity" android:theme="@style/Theme.AppCompat.NoActionBar.Translucent"/>
+        <activity android:autoVerify="true" android:excludeFromRecents="true" android:exported="true" android:launchMode="singleTask" android:name="com.google.android.apps.chromecast.app.mediaapps.OAuthHandoffActivity" android:theme="@style/Theme.AppCompat.NoActionBar.Translucent">
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:host="chromecast.auth.com" android:pathPattern="/done" android:scheme="comgooglecast"/>
+            </intent-filter>
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:host="offers" android:pathPattern="/end" android:scheme="comgooglecast"/>
+            </intent-filter>
+        </activity>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.nest.accountmerge.NestAccountMigrationActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.nest.setup.NestPairingActivity"/>
+        <activity android:exported="false" android:label="@string/device_setup_title" android:name="com.google.android.apps.chromecast.app.orchestration.LinkedUsersActivity" android:windowSoftInputMode="adjustResize|stateHidden"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.postsetup.cast.PostSetupWizardActivity" android:windowSoftInputMode="adjustResize|stateHidden"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.postsetup.gae.duo.CallsStandaloneWizardActivity" android:windowSoftInputMode="adjustResize|stateHidden"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.postsetup.gae.learn.GAELearnFlowActivity" android:windowSoftInputMode="adjustResize|stateHidden"/>
+        <activity android:exported="false" android:label="@string/edit_home_address_top_bar_title" android:name="com.google.android.apps.chromecast.app.postsetup.gae.locations.HomeAddressEditActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.postsetup.gae.locations.AddressMismatchStandaloneWizardActivity" android:windowSoftInputMode="adjustResize|stateHidden"/>
+        <activity android:exported="false" android:label="@string/device_setup_title" android:name="com.google.android.apps.chromecast.app.postsetup.gae.GAEWizardActivity" android:theme="@style/GAESnackbarStyle" android:windowSoftInputMode="adjustResize|stateHidden"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.postsetup.gae.DeviceAlreadyOnAccountActivity" android:windowSoftInputMode="adjustResize|stateHidden"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.postsetup.gae.userguide.DigitalUserGuideActivity" android:windowSoftInputMode="adjustResize|stateHidden"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.postsetup.mediaservices.gal.GALFlowActivity" android:theme="@style/TransparentTheme"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.postsetup.mediaservices.OobeMediaActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.postsetup.nestlinking.NestLinkingSetupHostActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.postsetup.structure.ManagerOnboardingHostActivity" android:theme="@style/AppTheme.SolidStatusBar"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.postsetup.videomonitoring.VideoMonitoringSetupActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.remotecontrol.accesspoint.AccessPointControllerActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.remotecontrol.energy.schedules.ThermostatScheduleActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.remotecontrol.energy.settings.rewiring.ThermostatRewiringActivity"/>
+        <activity android:exported="false" android:label="@string/media_screen_title" android:name="com.google.android.apps.chromecast.app.remotecontrol.media.MediaActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.remotecontrol.RemoteControlActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.remotecontrol.HomeAutomationControllerActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.remotecontrol.GroupVolumeControlActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.remotecontrol.EqualizerSettingsActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.remotecontrol.safety.LockProximityUnlockActivity" android:noHistory="true" android:taskAffinity=""/>
+        <receiver android:exported="true" android:name="com.google.android.apps.chromecast.app.remotecontrol.safety.LockProximityReceiver" android:permission="android.permission.BLUETOOTH|android.permission.BLUETOOTH_ADMIN">
+            <intent-filter>
+                <action android:name="com.google.android.apps.chromecast.app.remotecontrol.safety.action.BLE_SCANNED"/>
+            </intent-filter>
+        </receiver>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.room.wizardcomponents.StandaloneRoomWizardActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.routines.RoutinesImmersiveActivity"/>
+        <activity android:exported="false" android:launchMode="singleTop" android:name="com.google.android.apps.chromecast.app.settings.device.CloudDeviceSettingsActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.settings.fdr.FDRActivity"/>
+        <activity android:exported="false" android:label="@string/settings_bt_header" android:name="com.google.android.apps.chromecast.app.setup.bluetooth.BluetoothManagementActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.setup.categorypicker.FluxCategoryPickerActivity" android:theme="@style/AppTheme.SolidStatusBar"/>
+        <activity android:exported="false" android:label="@string/default_media_page_title" android:name="com.google.android.apps.chromecast.app.setup.defaultoutput.ui.DefaultOutputActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.setup.defaultoutputdevice.summary.DefaultSpeakerOutputSelectionActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.setup.defaultoutputdevice.summary.DefaultTvOutputSelectionActivity"/>
+        <activity android:exported="false" android:launchMode="singleTop" android:name="com.google.android.apps.chromecast.app.setup.flux.components.common.homeawaytasks.HawRoutineActionsTabsActivity"/>
+        <activity android:exported="false" android:launchMode="singleTop" android:name="com.google.android.apps.chromecast.app.setup.flux.components.common.nestedpreferencetask.NestedPreferenceActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.setup.flux.hangingsubwrapper.HangingSubWrapperActivity"/>
+        <activity android:exported="false" android:label="@string/device_setup_talkback_title" android:name="com.google.android.apps.chromecast.app.setup.DeviceSetupActivity" android:windowSoftInputMode="adjustResize|stateHidden"/>
+        <activity android:exported="false" android:label="@string/device_settings_title" android:name="com.google.android.apps.chromecast.app.setup.DeviceSettingsActivity" android:windowSoftInputMode="adjustPan"/>
+        <activity android:exported="false" android:label="@string/gae_wizard_invalid_name_rename_field" android:name="com.google.android.apps.chromecast.app.setup.EditDeviceNameActivity"/>
+        <activity android:exported="false" android:label="@string/settings_notification_sounds_header" android:name="com.google.android.apps.chromecast.app.setup.NotificationSoundsActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.setup.QrScanSetupActivity" flag="androidtv_s_qr_oobe_enabled"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.setup.DeviceSetupConfirmationActivity"/>
+        <activity android:exported="false" android:label="@string/nm_title" android:name="com.google.android.apps.chromecast.app.setup.nightmode.NightModeManagementActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.setup.thirdpartyconcierge.ThirdPartyConciergeActivity" android:theme="@style/AppTheme.SolidStatusBar"/>
+        <activity android:exported="false" android:label="@string/sp_introduction_title" android:name="com.google.android.apps.chromecast.app.stereopairing.creation.StereoPairCreationActivity"/>
+        <activity android:exported="false" android:label="@string/sp_settings_title" android:name="com.google.android.apps.chromecast.app.stereopairing.settings.StereoPairSeparateSettingsActivity"/>
+        <activity android:exported="false" android:label="@string/device_settings_title" android:name="com.google.android.apps.chromecast.app.stereopairing.settings.StereoPairSettingsActivity" android:windowSoftInputMode="stateAlwaysHidden"/>
+        <activity android:configChanges="orientation|screenSize" android:exported="false" android:name="com.google.android.apps.chromecast.app.store.StoreSubscriptionWebViewActivity"/>
+        <activity android:exported="false" android:launchMode="singleTop" android:name="com.google.android.apps.chromecast.app.structuremode.haw.onboarding.HawOnboardingActivity"/>
+        <service android:exported="true" android:name="com.google.android.apps.chromecast.app.systemcontrol.HomeControlService" android:permission="android.permission.BIND_CONTROLS">
+            <intent-filter>
+                <action android:name="android.service.controls.ControlsProviderService"/>
+            </intent-filter>
+        </service>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.userpreference.UserPreferenceActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.usersettings.EmailSubscriptionSettingsActivity"/>
+        <receiver android:exported="true" android:name="com.google.android.apps.chromecast.app.util.phenotype.PhenotypeBroadcastReceiver">
+            <intent-filter>
+                <action android:name="com.google.android.gms.phenotype.UPDATE"/>
+            </intent-filter>
+        </receiver>
+        <activity android:configChanges="orientation|screenSize" android:exported="false" android:name="com.google.android.apps.chromecast.app.web.WebViewActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.widget.genericerror.GenericErrorActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.widget.handoff.ResultBroadcastHandoffActivity" android:theme="@style/Theme.AppCompat.NoActionBar.Translucent"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.wifi.familywifi.FamilyWifiActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.wifi.familywifi.FamilyWifiSetupActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.wifi.familywifi.schedules.EditBlockingScheduleActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.wifi.familywifi.schedules.CreateBlockingScheduleActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.wifi.familywifi.stationset.EditStationSetActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.wifi.familywifi.stationset.CreateStationSetActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.wifi.guestnetwork.WifiImmersiveGuestNetworkActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.wifi.immersive.WifiImmersiveActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.wifi.migrationflow.MigrationFlowActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.wifi.network.meshtest.MeshTestActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.wifi.network.NetworkDetailsV3Activity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.wifi.network.v2.NetworkDetailsActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.wifi.network.wanspeedtest.WanSpeedTestActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.wifi.networksettings.WifiImmersivePrimaryNetworkActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.wifi.networksettings.ShowPasswordActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.wifi.networksettings.privacy.PrivacySettingsActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.wifi.setup.CastAccessPointSetupActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.wifi.setup.WifiSetupActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.wifi.stations.enhanced.StationDetailsActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.wifi.stations.StationListActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.wifi.stations.PrioritizeStationActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.wifi.support.SupportCodeActivity"/>
+        <activity android:exported="false" android:name="com.google.android.apps.chromecast.app.wifi.w426.Wifi426Activity"/>
+        <activity android:enabled="false" android:exported="false" android:launchMode="singleInstance" android:name="com.google.android.play.core.missingsplits.PlayCoreMissingSplitsActivity" android:process=":playcore_missing_splits_activity" android:stateNotNeeded="true"/>
+        <activity android:enabled="false" android:exported="false" android:name="com.google.android.play.core.common.PlayCoreDialogWrapperActivity" android:stateNotNeeded="true" android:theme="@style/Theme.PlayCore.Transparent"/>
+        <activity android:excludeFromRecents="true" android:exported="false" android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+        <service android:exported="true" android:name="com.google.android.gms.auth.api.signin.RevocationBoundService" android:permission="com.google.android.gms.auth.api.signin.permission.REVOCATION_NOTIFICATION" android:visibleToInstantApps="true"/>
+        <activity android:exported="false" android:name="com.google.android.gms.common.api.GoogleApiActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
+        <activity android:exported="true" android:launchMode="singleTask" android:name="com.google.android.libraries.accountlinking.activity.AccountLinkingActivity" android:theme="@style/GAL.Invisible">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:host="galredirect" android:scheme="comgooglecast"/>
+            </intent-filter>
+        </activity>
+        <activity android:exported="false" android:name="com.google.android.libraries.deepauth.appauth.AppAuthReceiverActivity" android:process="" android:theme="@style/GDI.AppAuthReceiver"/>
+        <activity android:exported="false" android:name="com.google.android.libraries.deepauth.appauth.AppAuthCancellationReceiverActivity" android:process="" android:theme="@style/GDI.AppAuthReceiver"/>
+        <activity android:exported="false" android:launchMode="singleTask" android:name="net.openid.appauth.AuthorizationManagementActivity" android:process="" android:theme="@style/GDI.Invisible"/>
+        <activity android:exported="false" android:name="com.google.android.libraries.deepauth.ConsentActivity" android:process="" android:theme="@style/GDI.Consent"/>
+        <activity android:exported="false" android:name="com.google.android.libraries.deepauth.accountcreation.ui.BbbConsentActivity" android:process="" android:theme="@style/GDI.Consent"/>
+        <activity android:exported="false" android:name="com.google.android.libraries.deepauth.ActivityController" android:process="" android:theme="@style/GDI.Invisible"/>
+        <activity android:exported="false" android:name="com.google.android.libraries.deepauth.accountcreation.AccountChooserActivity" android:process="" android:theme="@style/GDI.AccountChooser"/>
+        <activity android:exported="false" android:name="com.google.android.libraries.deepauth.accountcreation.ui.BbbAccountChooserActivity" android:process="" android:theme="@style/GDI.AccountChooser"/>
+        <activity android:exported="false" android:name="com.google.android.libraries.deepauth.accountcreation.CreateAccountActivity" android:process="" android:theme="@style/GDI.CreateAccount"/>
+        <activity android:exported="false" android:name="com.google.android.libraries.deepauth.accountcreation.ui.BbbCreateAccountActivity" android:process="" android:theme="@style/GDI.CreateAccount"/>
+        <activity android:exported="false" android:name="com.google.android.libraries.deepauth.accountcreation.ui.Gm2AccountChooserActivity" android:process="" android:theme="@style/GDI.GM2.Dialog"/>
+        <activity android:exported="false" android:name="com.google.android.libraries.deepauth.accountcreation.ui.Gm2CreateAccountActivity" android:process="" android:theme="@style/GDI.GM2.Dialog"/>
+        <activity android:exported="false" android:name="com.google.android.libraries.deepauth.accountcreation.ui.Gm2ConsentActivity" android:process="" android:theme="@style/GDI.GM2.Dialog"/>
+        <meta-data android:name="com.google.android.libraries.glide.fife.module.FifeGlideModule" android:value="GlideModule"/>
+        <receiver android:exported="true" android:name="com.google.android.libraries.internal.growth.growthkit.inject.GrowthKitBootCompletedBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.QUICKBOOT_POWERON"/>
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED"/>
+            </intent-filter>
+        </receiver>
+        <receiver android:exported="true" android:name="com.google.android.libraries.internal.growth.growthkit.internal.debug.TestingToolsBroadcastReceiver">
+            <intent-filter>
+                <action android:name="com.google.android.libraries.internal.growth.growthkit.ADD_PROMO"/>
+                <action android:name="com.google.android.libraries.internal.growth.growthkit.ADD_PREVIEW_PROMO"/>
+                <action android:name="com.google.android.libraries.internal.growth.growthkit.LOG_DEBUG_DATA"/>
+                <action android:name="com.google.android.libraries.internal.growth.growthkit.SYNC"/>
+                <action android:name="com.google.android.libraries.internal.growth.growthkit.CLEAR_COUNTERS"/>
+                <action android:name="com.google.android.libraries.internal.growth.growthkit.FETCH_PROMOTIONS"/>
+                <action android:name="com.google.android.libraries.internal.growth.growthkit.FETCH_EVAL_RESULTS"/>
+            </intent-filter>
+        </receiver>
+        <receiver android:exported="true" android:name="com.google.android.libraries.internal.growth.growthkit.internal.experiments.impl.PhenotypeBroadcastReceiver">
+            <intent-filter>
+                <action android:name="com.google.android.gms.phenotype.UPDATE"/>
+            </intent-filter>
+        </receiver>
+        <service android:exported="false" android:name="com.google.android.libraries.internal.growth.growthkit.internal.jobs.impl.GrowthKitJobService" android:permission="android.permission.BIND_JOB_SERVICE"/>
+        <service android:exported="false" android:name="com.google.android.libraries.internal.growth.growthkit.internal.jobs.impl.GrowthKitBelowLollipopJobService"/>
+        <activity android:exported="false" android:name="com.google.android.libraries.nest.flux.framework.FluxActivity"/>
+        <receiver android:exported="true" android:name="com.google.android.libraries.notifications.entrypoints.accountchanged.AccountChangedReceiver">
+            <intent-filter>
+                <action android:name="android.accounts.LOGIN_ACCOUNTS_CHANGED"/>
+            </intent-filter>
+        </receiver>
+        <receiver android:exported="true" android:name="com.google.android.libraries.notifications.entrypoints.blockstatechanged.BlockStateChangedReceiver">
+            <intent-filter>
+                <action android:name="android.app.action.APP_BLOCK_STATE_CHANGED"/>
+                <action android:name="android.app.action.NOTIFICATION_CHANNEL_BLOCK_STATE_CHANGED"/>
+                <action android:name="android.app.action.NOTIFICATION_CHANNEL_GROUP_BLOCK_STATE_CHANGED"/>
+            </intent-filter>
+        </receiver>
+        <receiver android:exported="true" android:name="com.google.android.libraries.notifications.entrypoints.gcm.GcmBroadcastReceiver" android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter android:priority="99">
+                <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
+            </intent-filter>
+        </receiver>
+        <receiver android:exported="true" android:name="com.google.android.libraries.notifications.entrypoints.localechanged.LocaleChangedReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.LOCALE_CHANGED"/>
+            </intent-filter>
+        </receiver>
+        <receiver android:exported="true" android:name="com.google.android.libraries.notifications.entrypoints.phenotype.PhenotypeUpdateReceiver">
+            <intent-filter>
+                <action android:name="com.google.android.gms.phenotype.UPDATE"/>
+            </intent-filter>
+        </receiver>
+        <receiver android:exported="true" android:name="com.google.android.libraries.notifications.entrypoints.restart.RestartReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED"/>
+            </intent-filter>
+        </receiver>
+        <service android:exported="false" android:name="com.google.android.libraries.notifications.entrypoints.scheduled.ScheduledTaskService" android:permission="android.permission.BIND_JOB_SERVICE"/>
+        <receiver android:exported="false" android:name="com.google.android.libraries.notifications.entrypoints.systemtray.SystemTrayBroadcastReceiver"/>
+        <activity android:exported="false" android:name="com.google.android.libraries.notifications.entrypoints.systemtray.SystemTrayActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+        <receiver android:exported="true" android:name="com.google.android.libraries.notifications.entrypoints.timezonechanged.TimezoneChangedReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.TIMEZONE_CHANGED"/>
+            </intent-filter>
+        </receiver>
+        <service android:exported="false" android:name="com.google.android.libraries.notifications.executor.impl.basic.ChimeExecutorApiService"/>
+        <activity android:exported="false" android:name="com.google.android.libraries.onegoogle.accountmenu.accountlayer.AddAccountActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+        <receiver android:exported="false" android:name="com.google.android.libraries.performance.primes.transmitter.LifeboatReceiver" android:process=":primes_lifeboat"/>
+        <receiver android:exported="true" android:name="com.google.android.libraries.phenotype.client.stable.AccountRemovedBroadcastReceiver" android:process="">
+            <intent-filter>
+                <action android:name="android.accounts.action.ACCOUNT_REMOVED"/>
+            </intent-filter>
+        </receiver>
+        <receiver android:exported="true" android:name="com.google.android.libraries.phenotype.client.stable.PhenotypeUpdateBackgroundBroadcastReceiver" android:permission="com.google.android.gms.permission.PHENOTYPE_UPDATE_BROADCAST" android:process="">
+            <intent-filter>
+                <action android:name="com.google.android.gms.phenotype.UPDATE"/>
+            </intent-filter>
+        </receiver>
+        <activity android:exported="false" android:label="@string/places_autocomplete_label" android:name="com.google.android.libraries.places.widget.AutocompleteActivity" android:theme="@style/PlacesAutocompleteOverlay" android:windowSoftInputMode="adjustResize"/>
+        <activity android:exported="true" android:label="@string/preferences_license_title" android:name="com.google.android.libraries.social.licenses.LicenseMenuActivity" android:theme="@style/Theme.AppCompat.DayNight"/>
+        <activity android:exported="false" android:label="@string/preferences_license_title" android:name="com.google.android.libraries.social.licenses.LicenseActivity" android:theme="@style/Theme.AppCompat.DayNight"/>
+        <receiver android:exported="true" android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver" android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
+            </intent-filter>
+        </receiver>
+        <service android:directBootAware="true" android:exported="false" android:name="com.google.firebase.messaging.FirebaseMessagingService">
+            <intent-filter android:priority="-500">
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+        <provider android:authorities="com.google.android.apps.chromecast.app.lifecycle-process" android:exported="false" android:multiprocess="true" android:name="androidx.lifecycle.ProcessLifecycleOwnerInitializer"/>
+        <service android:directBootAware="false" android:enabled="@bool/enable_system_alarm_service_default" android:exported="false" android:name="androidx.work.impl.background.systemalarm.SystemAlarmService"/>
+        <service android:directBootAware="false" android:enabled="@bool/enable_system_job_service_default" android:exported="true" android:name="androidx.work.impl.background.systemjob.SystemJobService" android:permission="android.permission.BIND_JOB_SERVICE"/>
+        <service android:directBootAware="false" android:enabled="@bool/enable_system_foreground_service_default" android:exported="false" android:name="androidx.work.impl.foreground.SystemForegroundService"/>
+        <receiver android:directBootAware="false" android:enabled="true" android:exported="false" android:name="androidx.work.impl.utils.ForceStopRunnable$BroadcastReceiver"/>
+        <receiver android:directBootAware="false" android:enabled="false" android:exported="false" android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$BatteryChargingProxy">
+            <intent-filter>
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED"/>
+                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED"/>
+            </intent-filter>
+        </receiver>
+        <receiver android:directBootAware="false" android:enabled="false" android:exported="false" android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$BatteryNotLowProxy">
+            <intent-filter>
+                <action android:name="android.intent.action.BATTERY_OKAY"/>
+                <action android:name="android.intent.action.BATTERY_LOW"/>
+            </intent-filter>
+        </receiver>
+        <receiver android:directBootAware="false" android:enabled="false" android:exported="false" android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$StorageNotLowProxy">
+            <intent-filter>
+                <action android:name="android.intent.action.DEVICE_STORAGE_LOW"/>
+                <action android:name="android.intent.action.DEVICE_STORAGE_OK"/>
+            </intent-filter>
+        </receiver>
+        <receiver android:directBootAware="false" android:enabled="false" android:exported="false" android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$NetworkStateProxy">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+            </intent-filter>
+        </receiver>
+        <receiver android:directBootAware="false" android:enabled="false" android:exported="false" android:name="androidx.work.impl.background.systemalarm.RescheduleReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.TIME_SET"/>
+                <action android:name="android.intent.action.TIMEZONE_CHANGED"/>
+            </intent-filter>
+        </receiver>
+        <receiver android:directBootAware="false" android:enabled="@bool/enable_system_alarm_service_default" android:exported="false" android:name="androidx.work.impl.background.systemalarm.ConstraintProxyUpdateReceiver">
+            <intent-filter>
+                <action android:name="androidx.work.impl.background.systemalarm.UpdateProxies"/>
+            </intent-filter>
+        </receiver>
+        <receiver android:directBootAware="false" android:enabled="true" android:exported="true" android:name="androidx.work.impl.diagnostics.DiagnosticsReceiver" android:permission="android.permission.DUMP">
+            <intent-filter>
+                <action android:name="androidx.work.diagnostics.REQUEST_DIAGNOSTICS"/>
+            </intent-filter>
+        </receiver>
+        <meta-data android:name="com.android.dynamic.apk.fused.modules" android:value="base"/>
+        <meta-data android:name="com.android.stamp.source" android:value="https://play.google.com/store"/>
+        <meta-data android:name="com.android.stamp.type" android:value="STAMP_TYPE_STANDALONE_APK"/>
+        <meta-data android:name="com.android.vending.splits" android:resource="@xml/splits0"/>
+        <meta-data android:name="com.android.vending.derived.apk.id" android:value="1"/>
+    </application>
+</manifest>

@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?><manifest xmlns:android="http://schemas.android.com/apk/res/android" android:compileSdkVersion="30" android:compileSdkVersionCodename="11" android:installLocation="auto" package="piuk.blockchain.android" platformBuildVersionCode="30" platformBuildVersionName="11">
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.USE_BIOMETRIC"/>
+    <uses-permission android:name="android.permission.USE_FINGERPRINT"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-feature android:name="android.hardware.location.gps"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.NFC"/>
+    <permission android:label="Get Veriff status reports" android:name="piuk.blockchain.android.VERIFF_STATUS_BROADCAST_PERMISSION" android:protectionLevel="signature"/>
+    <uses-feature android:name="android.hardware.camera" android:required="false"/>
+    <uses-feature android:name="android.hardware.camera.front" android:required="false"/>
+    <uses-feature android:name="android.hardware.camera.autofocus" android:required="false"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-feature android:glEsVersion="0x00020000" android:required="true"/>
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
+    <uses-permission android:name="com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE"/>
+    <application android:allowBackup="true" android:appComponentFactory="androidx.core.app.CoreComponentFactory" android:backupAgent="piuk.blockchain.androidcore.utils.CloudBackupAgent" android:extractNativeLibs="false" android:icon="@mipmap/ic_launcher" android:label="@string/app_name" android:name="piuk.blockchain.android.BlockchainApplication" android:resizeableActivity="false" android:roundIcon="@mipmap/ic_launcher_round" android:supportsRtl="true" android:theme="@style/AppTheme">
+        <activity android:configChanges="keyboardHidden|orientation|screenSize" android:launchMode="singleTask" android:name="piuk.blockchain.android.ui.launcher.LauncherActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <data android:scheme="bitcoin"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <data android:host="blockchain.info" android:pathPrefix="/invite" android:scheme="https"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+            </intent-filter>
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:host="blockchainwallet.page.link" android:scheme="https"/>
+                <data android:host="blockchain.page.link" android:scheme="https"/>
+            </intent-filter>
+        </activity>
+        <activity android:configChanges="keyboardHidden|orientation|screenSize" android:name="piuk.blockchain.android.ui.transfer.receive.activity.ReceiveActivity"/>
+        <activity android:configChanges="keyboardHidden|orientation|screenSize" android:name="piuk.blockchain.android.ui.home.MainActivity" android:theme="@style/AppTheme.MainActivity" android:windowSoftInputMode="adjustPan"/>
+        <activity android:configChanges="keyboardHidden|orientation|screenSize" android:name="piuk.blockchain.android.ui.scan.QrScanActivity"/>
+        <activity android:configChanges="keyboardHidden|orientation|screenSize" android:name="piuk.blockchain.android.ui.settings.SettingsActivity"/>
+        <activity android:configChanges="keyboardHidden|orientation|screenSize" android:name="piuk.blockchain.android.ui.auth.PinEntryActivity"/>
+        <activity android:configChanges="keyboardHidden|orientation|screenSize" android:name="piuk.blockchain.android.ui.start.LandingActivity"/>
+        <activity android:configChanges="keyboardHidden|orientation|screenSize" android:name="piuk.blockchain.android.ui.start.LoginActivity" android:windowSoftInputMode="adjustResize"/>
+        <activity android:configChanges="keyboardHidden|orientation|screenSize" android:name="piuk.blockchain.android.ui.createwallet.CreateWalletActivity" android:windowSoftInputMode="adjustResize"/>
+        <activity android:configChanges="keyboardHidden|orientation|screenSize" android:name="piuk.blockchain.android.ui.addresses.AccountActivity"/>
+        <activity android:configChanges="keyboardHidden|orientation|screenSize" android:name="piuk.blockchain.android.ui.airdrops.AirdropCentreActivity"/>
+        <activity android:configChanges="keyboardHidden|orientation|screenSize" android:name="piuk.blockchain.android.ui.backup.BackupWalletActivity"/>
+        <activity android:configChanges="keyboardHidden|orientation|screenSize" android:name="piuk.blockchain.android.ui.upgrade.UpgradeWalletActivity"/>
+        <activity android:configChanges="keyboardHidden|orientation|screenSize" android:name="piuk.blockchain.android.ui.start.ManualPairingActivity"/>
+        <activity android:excludeFromRecents="true" android:name="piuk.blockchain.android.ui.auth.LogoutActivity" android:noHistory="true" android:theme="@style/NoDisplay"/>
+        <activity android:configChanges="keyboardHidden|orientation|screenSize" android:name="piuk.blockchain.android.ui.start.PasswordRequiredActivity"/>
+        <activity android:configChanges="keyboardHidden|orientation|screenSize" android:name="piuk.blockchain.android.ui.recover.RecoverFundsActivity"/>
+        <activity android:configChanges="keyboardHidden|orientation|screenSize" android:name="piuk.blockchain.android.ui.shortcuts.receive.ReceiveQrActivity" android:theme="@style/AppTheme.ReceiveQrWindow"/>
+        <activity android:configChanges="keyboardHidden|orientation|screenSize" android:name="piuk.blockchain.android.ui.onboarding.OnboardingActivity"/>
+        <activity android:configChanges="keyboardHidden|orientation|screenSize" android:name="piuk.blockchain.android.ui.pairingcode.PairingCodeActivity"/>
+        <activity android:configChanges="keyboardHidden|orientation|screenSize" android:name="piuk.blockchain.android.ui.ssl.SSLVerifyActivity"/>
+        <activity android:configChanges="keyboardHidden|orientation|screenSize" android:name="piuk.blockchain.android.ui.lockbox.LockboxLandingActivity"/>
+        <activity android:configChanges="keyboardHidden|orientation|screenSize" android:name="piuk.blockchain.android.ui.thepit.PitPermissionsActivity"/>
+        <activity android:configChanges="keyboardHidden|orientation|screenSize" android:name="piuk.blockchain.android.ui.thepit.PitVerifyEmailActivity"/>
+        <activity android:configChanges="keyboardHidden|orientation|screenSize" android:launchMode="singleTask" android:name="piuk.blockchain.android.ui.kyc.navhost.KycNavHostActivity"/>
+        <activity android:configChanges="keyboardHidden|orientation|screenSize" android:name="piuk.blockchain.android.ui.kyc.status.KycStatusActivity"/>
+        <activity android:configChanges="keyboardHidden|orientation|screenSize" android:name="piuk.blockchain.android.simplebuy.SimpleBuyActivity" android:windowSoftInputMode="adjustResize"/>
+        <activity android:configChanges="keyboardHidden|orientation|screenSize" android:name="piuk.blockchain.android.withdraw.WithdrawActivity" android:windowSoftInputMode="adjustResize"/>
+        <activity android:configChanges="keyboardHidden|orientation|screenSize" android:name="piuk.blockchain.android.cards.CardDetailsActivity" android:windowSoftInputMode="adjustResize"/>
+        <activity android:configChanges="keyboardHidden|orientation|screenSize" android:name="piuk.blockchain.android.cards.CardAuthoriseWebViewActivity" android:windowSoftInputMode="adjustResize"/>
+        <activity android:configChanges="keyboardHidden|orientation|screenSize" android:name="piuk.blockchain.android.ui.interest.InterestDashboardActivity"/>
+        <activity android:configChanges="keyboardHidden|orientation|screenSize" android:name="piuk.blockchain.android.ui.linkbank.LinkBankActivity"/>
+        <meta-data android:name="com.google.firebase.messaging.default_notification_icon" android:resource="@mipmap/ic_launcher"/>
+        <meta-data android:name="com.google.firebase.messaging.default_notification_color" android:resource="@color/notification_tint"/>
+        <meta-data android:name="com.sec.android.support.multiwindow" android:value="false"/>
+        <meta-data android:name="com.samsung.android.sdk.multiwindow.multiinstance.enable" android:value="false"/>
+        <meta-data android:name="com.samsung.android.sdk.multiwindow.penwindow.enable" android:value="false"/>
+        <meta-data android:name="preloaded_fonts" android:resource="@array/preloaded_fonts"/>
+        <meta-data android:name="com.google.android.backup.api_key" android:value=""/>
+        <provider android:authorities="piuk.blockchain.android.fileProvider" android:exported="false" android:grantUriPermissions="true" android:name="androidx.core.content.FileProvider">
+            <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/provider_paths"/>
+        </provider>
+        <service android:enabled="true" android:name="piuk.blockchain.android.data.notifications.FcmCallbackService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyC88pt-GRaAwJQ_uYsRrDjXi8K5QmcYi9Q"/>
+        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
+        <activity android:name="com.karumi.dexter.DexterActivity" android:theme="@style/Dexter.Internal.Theme.Transparent"/>
+        <activity android:name="mobi.lab.veriff.views.sessionstart.SessionStartActivity" android:theme="@style/vrffAppTheme"/>
+        <activity android:name="mobi.lab.veriff.views.intro.IntroActivity" android:theme="@style/vrffAppTheme"/>
+        <activity android:name="com.veriff.sdk.views.resubmission.ResubmissionActivity" android:theme="@style/vrffAppTheme"/>
+        <activity android:name="mobi.lab.veriff.views.country.CountryActivity" android:theme="@style/vrffAppTheme" android:windowSoftInputMode="adjustResize"/>
+        <activity android:name="mobi.lab.veriff.views.document.DocumentActivity" android:theme="@style/vrffAppTheme"/>
+        <activity android:name="mobi.lab.veriff.views.language.LanguageActivity" android:theme="@style/vrffAppTheme"/>
+        <activity android:launchMode="singleTop" android:name="com.veriff.sdk.views.upload.UploadActivity" android:theme="@style/vrffAppTheme"/>
+        <activity android:name="mobi.lab.veriff.views.error.ErrorActivity" android:theme="@style/vrffAppTheme"/>
+        <activity android:name="mobi.lab.veriff.views.camera.FlowActivity" android:theme="@style/vrffAppThemeDark"/>
+        <activity android:name="com.veriff.sdk.views.finished.FinishedActivity" android:theme="@style/vrffAppTheme"/>
+        <service android:exported="false" android:name="mobi.lab.veriff.service.SendAuthenticationFlowDataToServerService"/>
+        <service android:directBootAware="true" android:exported="false" android:name="com.google.firebase.components.ComponentDiscoveryService">
+            <meta-data android:name="com.google.firebase.components:com.google.firebase.dynamiclinks.internal.FirebaseDynamicLinkRegistrar" android:value="com.google.firebase.components.ComponentRegistrar"/>
+            <meta-data android:name="com.google.firebase.components:com.google.firebase.crashlytics.CrashlyticsRegistrar" android:value="com.google.firebase.components.ComponentRegistrar"/>
+            <meta-data android:name="com.google.firebase.components:com.google.firebase.remoteconfig.RemoteConfigRegistrar" android:value="com.google.firebase.components.ComponentRegistrar"/>
+            <meta-data android:name="com.google.firebase.components:com.google.firebase.messaging.FirebaseMessagingRegistrar" android:value="com.google.firebase.components.ComponentRegistrar"/>
+            <meta-data android:name="com.google.firebase.components:com.google.firebase.analytics.connector.internal.AnalyticsConnectorRegistrar" android:value="com.google.firebase.components.ComponentRegistrar"/>
+            <meta-data android:name="com.google.firebase.components:com.google.firebase.iid.Registrar" android:value="com.google.firebase.components.ComponentRegistrar"/>
+            <meta-data android:name="com.google.firebase.components:com.google.firebase.abt.component.AbtRegistrar" android:value="com.google.firebase.components.ComponentRegistrar"/>
+            <meta-data android:name="com.google.firebase.components:com.google.firebase.datatransport.TransportRegistrar" android:value="com.google.firebase.components.ComponentRegistrar"/>
+            <meta-data android:name="com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsRegistrar" android:value="com.google.firebase.components.ComponentRegistrar"/>
+        </service>
+        <service android:directBootAware="true" android:exported="false" android:name="com.google.firebase.messaging.FirebaseMessagingService">
+            <intent-filter android:priority="-500">
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+        <receiver android:exported="true" android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver" android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
+            </intent-filter>
+        </receiver>
+        <activity android:exported="false" android:name="com.google.android.gms.common.api.GoogleApiActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+        <provider android:authorities="piuk.blockchain.android.firebaseinitprovider" android:exported="false" android:initOrder="100" android:name="com.google.firebase.provider.FirebaseInitProvider"/>
+        <receiver android:enabled="true" android:exported="false" android:name="com.google.android.gms.measurement.AppMeasurementReceiver"/>
+        <service android:enabled="true" android:exported="false" android:name="com.google.android.gms.measurement.AppMeasurementService"/>
+        <service android:enabled="true" android:exported="false" android:name="com.google.android.gms.measurement.AppMeasurementJobService" android:permission="android.permission.BIND_JOB_SERVICE"/>
+        <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version"/>
+        <activity android:enabled="false" android:exported="false" android:launchMode="singleInstance" android:name="com.google.android.play.core.missingsplits.PlayCoreMissingSplitsActivity" android:process=":playcore_missing_splits_activity" android:stateNotNeeded="true"/>
+        <activity android:enabled="false" android:exported="false" android:name="com.google.android.play.core.common.PlayCoreDialogWrapperActivity" android:stateNotNeeded="true" android:theme="@style/Theme.PlayCore.Transparent"/>
+        <service android:enabled="false" android:exported="true" android:name="com.google.android.play.core.assetpacks.AssetPackExtractionService"/>
+        <provider android:authorities="piuk.blockchain.android.lifecycle-process" android:exported="false" android:multiprocess="true" android:name="androidx.lifecycle.ProcessLifecycleOwnerInitializer"/>
+        <service android:exported="false" android:name="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery">
+            <meta-data android:name="backend:com.google.android.datatransport.cct.CctBackendFactory" android:value="cct"/>
+        </service>
+        <service android:exported="false" android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService" android:permission="android.permission.BIND_JOB_SERVICE"/>
+        <receiver android:exported="false" android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver"/>
+        <meta-data android:name="com.android.dynamic.apk.fused.modules" android:value="base"/>
+        <meta-data android:name="com.android.stamp.source" android:value="https://play.google.com/store"/>
+        <meta-data android:name="com.android.stamp.type" android:value="STAMP_TYPE_STANDALONE_APK"/>
+        <meta-data android:name="com.android.vending.splits" android:resource="@xml/splits0"/>
+        <meta-data android:name="com.android.vending.derived.apk.id" android:value="1"/>
+    </application>
+</manifest>
