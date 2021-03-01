@@ -4,9 +4,8 @@
 ## Índice :floppy_disk: ##
 - [Para que serve este repositório?](#Para-que-serve-este-repositório?)
 - [Atividades](#Atividades)
+    - [T1](#T1)
     - [T2](#T2)
-    - [T3](#T3)
-    - [T4](#T4)
     - [Projeto da disciplina](#Projeto-da-disciplina)
 
 ## Para que serve este repositório? ##
@@ -15,14 +14,19 @@
 ## Atividades ##
   Cada folder irá conter uma atividade, que será descrita nas seções seguintes.
 
+### T1 ###
+
 ### T2 ###
   A primeira [Parte1](T2/Parte1/), consiste de um código `main.py` que deve receber como entrada um folder contendo `AndroidManifest.xml`. O folder com os respectivos manifests já esta presente [aqui](T2/Parte1/manifest).
 
-  Requisitos:
-  * Python >= 3.8
-  * pip3 com os seguintes pacotes:
-    * xmltodict
-    * argparse
+  <details>
+    <summary>Requisitos: (Clique para expandir!)</summary>
+
+    * Python >= 3.8
+    * pip3 com os seguintes pacotes:
+      * xmltodict
+      * argparse
+  </details>
 
   Para executar a aplicação:
   ```
@@ -43,15 +47,11 @@
   python3 main2.py --file-one Tibia_Setup.exe --file-two avira_pt-br_sptl1_89fae122b00d581b__pavwws.exe
   ```
 
-### T3 ###
-
-### T4 ###
-
 ### Projeto da disciplina ###
 
-  Grupo: Tiago Heinrich [h31nr1ch](https://github.com/h31nr1ch) e Rodrigo Lemos [Rodrigo-Lemos](https://github.com/Rodrigo-Lemos)
+  Grupo: Tiago Heinrich (github: [h31nr1ch](https://github.com/h31nr1ch)) e Rodrigo Lemos (github: [Rodrigo-Lemos](https://github.com/Rodrigo-Lemos))
 
-  A proposta a ser estudada, consiste na utilização do dataset Androzoo junto com um dataset dinâmico (androDi) para a identificação de ataques no Android. Este dataset híbrido irá explorar características do androzoo (dataset estático) para solucionar problemáticas já identificadas com o androDi.
+  A proposta a ser estudada, consiste na utilização do dataset Androzoo junto com um dataset dinâmico (androDi) para a identificação de ataques no Android. Este dataset híbrido irá explorar características do androzoo (dataset estático) para solucionar problemáticas já identificadas com o androDi (complexidade ao realizar identificação de ataques online).
 
   O androDi foi explorado com o WEKA para a identificação de alguns comportamentos e melhor compreensão da distribuição do conjunto de dados. Permitindo identificar a importância e peso que features como BC_REPLY_SG, BC_REPLY e BR_TRANSACTION_COMPLETE tem sobre o dataset, também destacando atributos com baixa distribuição dentre as classes presentes.
 
@@ -71,3 +71,11 @@
   Na parte exploratória do AndroDi foi constatado alguns atributos que só possuem uma única classe, como BR_ACQUIRE_RESULT e BR_DEAD_REPLY. Estas classes não apresentam nenhuma contribuição ao conjunto de dados e serão removidas.
 
   ![alt text](https://github.com/h31nr1ch/CDadosSeg/blob/main/TrabalhoFinal/img/weka.png?raw=true)
+
+#### Proximas Etapas ####
+
+  Esta seção destaca as próximas etapas do trabalho.
+
+  * Terminar a seleção de características do androzoo para a unificação dos datasets
+  * Definição dos modelos e realização dos testes
+  * Escrever os resultados obtidos
