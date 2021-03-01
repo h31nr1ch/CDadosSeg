@@ -34,11 +34,14 @@
   ```
   A segunda [Parte2](T2/Parte2), consiste de dois códigos `main.py` que deve receber um único arquivo executável como entrada e `main2.py` que deve receber dois arquivos executáveis.
 
-  Requisitos:
-  * Python >= 3.8
-  * pip3 com os seguintes pacotes:
-    * pefile
-    * argparse
+  <details>
+    <summary>Requisitos: (Clique para expandir!)</summary>
+
+    * Python >= 3.8
+    * pip3 com os seguintes pacotes:
+      * pefile
+      * argparse
+  </details>
 
   Para executar a aplicação:
   ```
