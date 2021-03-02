@@ -54,27 +54,27 @@
 
   Grupo: Tiago Heinrich (github: [h31nr1ch](https://github.com/h31nr1ch)) e Rodrigo Lemos (github: [Rodrigo-Lemos](https://github.com/Rodrigo-Lemos))
 
-  A proposta a ser estudada, consiste na utilização do dataset Androzoo junto com um dataset dinâmico (androDi) para a identificação de ataques no Android. Este dataset híbrido irá explorar características do androzoo (dataset estático) para solucionar problemáticas já identificadas com o androDi (complexidade ao realizar identificação de ataques online).
+  A proposta a ser estudada, consiste na utilização do dataset Androzoo [1] em conjunto com um dataset gerado dinâmicamente (androDi) com objetivo de identificar malwares no Android. O dataset híbrido gerado dessa combinação tem como objetivo solucionar problemas existentes em ambos os datasets, como a ofuscação de código (problema de datasets estáticos) e a dificuldade na identificação de ataques online com o androDi devido a complexidade para coletar traços de execução das aplicações.
 
-  O androDi foi explorado com o WEKA para a identificação de alguns comportamentos e melhor compreensão da distribuição do conjunto de dados. Permitindo identificar a importância e peso que features como BC_REPLY_SG, BC_REPLY e BR_TRANSACTION_COMPLETE tem sobre o dataset, também destacando atributos com baixa distribuição dentre as classes presentes.
+  Os dados do androDi consistem da distribuição de comandos executados no módulo do kernel Binder por cada uma das aplicações analisadas durante suas execuções no Android; em cada execução foram simulados 1000 iterações com o respectivo aplicativo. As aplicações foram escolhidas No dataset androzoo, de forma a obter os aplicativos rotulados e garantir que os aplicativos baixados não foram modificados após serem classificados; além disso, o androzoo já destaca um conjunto de características dos aplicativos analisados. Esta representação dinâmica é ideal para identificação de ataques em tempo real, uma vez que utiliza o comportamento do aplicativo em execução como característica para detecção, ao qual destaca uma das finalidades do modelo a ser proposto para realizar a identificação de ataques através de técnicas de machine learning.
+  
+  O androzoo, além de ser a origem da lista de aplicativos e seus rótulos, irá contribuir para o modelo de detecção através de características estáticas do dataset de forma a gerar um modelo de detecção híbrido. Um exemplo de característica estática a ser selecionada é a lista de permissões dos aplicativos; entretanto as demais features a compor o dataset ainda serão selecionadas.
 
-  Os dados consistem de um conjunto de características dinâmicas extraídas de inúmeras execuções de aplicações no Android. As aplicações foram escolhidas tendo como base o dataset androzoo, ao qual já destaca um conjunto de características de aplicativos do Android. Esta representação dinâmica é ideal para identificação de ataques em tempo real, ao qual destaca uma das finalidades do modelo a ser proposto para realizar a identificação de ataques através de técnicas de machine learning.
-
-  Especificamente os dados encontrados no androDi são numéricos, aos quais as 37 features destacam uma representação de aparições em um traço. Uma amostra é apresentada a seguir:
+  O dataset utilizado consiste em 201 aplicativos, rotulados em maliciosos ou não. Ele está distribuído de forma balanceada entre as duas classes existentes, sendo 96 aplicativos normais e 105 aplicativos maliciosos. Especificamente os dados encontrados no androDi são numéricos, aos quais as 37 features destacam uma representação de aparições em um traço. Uma amostra é apresentada a seguir:
 
   ```
   Apk,Label,BC_REPLY_SG,BC_TRANSACTION,BC_REPLY,BC_ACQUIRE_RESULT,BC_FREE_BUFFER,BC_INCREFS,BC_ACQUIRE,BC_RELEASE,BC_DECREFS,BC_INCREFS_DONE,BC_ACQUIRE_DONE,BC_ATTEMPT_ACQUIRE,BC_REGISTER_LOOPER,BC_ENTER_LOOPER,BC_EXIT_LOOPER,BC_REQUEST_DEATH_NOTIFICATION,BC_CLEAR_DEATH_NOTIFICATION,BC_DEAD_BINDER_DONE,BC_TRANSACTION_SG,BR_ERROR,BR_OK,BR_TRANSACTION,BR_ACQUIRE_RESULT,BR_DEAD_REPLY,BR_TRANSACTION_COMPLETE,BR_INCREFS,BR_ACQUIRE,BR_RELEASE,BR_DECREFS,BR_ATTEMPT_ACQUIRE,BR_NOOP,BR_SPAWN_LOOPER,BR_FINISHED,BR_DEAD_BINDER,BR_CLEAR_DEATH_NOTIFICATION_DONE,BR_FAILED_REPLY,BR_REPLY
   com.ForntYardIdeas.eshall,1,9876,35739,21682,0,82659,4845,4854,4333,4329,3683,3684,0,38,12,0,605,574,19,15458,0,0,51074,0,0,82741,3683,3682,3485,3492,0,0,37,0,19,574,0,31615
   ```
 
-  Devido ao tipo de dado e tipo de processo esperamos utilizar o AndroDi junto com uma seleção de features ainda não definidas do androzoo para aperfeiçoar a identificação de atividades maliciosas em um ambiente Android.
-
-  Uma seleção de características já presentes no androzoo será utilizada para complementar a base dinâmica que consistem de chamadas de sistemas capturadas no binder do android, esta sendo representações de execuções de cada aplicação.
+  O androDi foi explorado com o WEKA para a identificação de alguns comportamentos e melhor compreensão da distribuição do conjunto de dados. Permitindo identificar a importância e peso que features como BC_REPLY_SG, BC_REPLY e BR_TRANSACTION_COMPLETE tem sobre o dataset, também destacando atributos com baixa distribuição dentre as classes presentes.
 
   Na parte exploratória do AndroDi foi constatado alguns atributos que só possuem uma única classe, como BR_ACQUIRE_RESULT e BR_DEAD_REPLY. Estas classes não apresentam nenhuma contribuição ao conjunto de dados e serão removidas.
 
   ![alt text](https://github.com/h31nr1ch/CDadosSeg/blob/main/TrabalhoFinal/img/weka.png?raw=true)
 
+  De forma a identificar características do androDi interessantes para o modelo foi realizado uma seleção de características utilizando o método RFECV nos dados normalizados por aplicativo, de forma a destacar a proporção entre os comandos em cada um dos aplicativos e desconsiderar o volume de chamadas dos mesmos. Como resultado foram selecionadas as características: ['BC_REPLY_SG', 'BC_TRANSACTION', 'BC_REPLY', 'BC_FREE_BUFFER', 'BC_INCREFS', 'BC_ACQUIRE', 'BC_DECREFS', 'BC_ACQUIRE_DONE', 'BC_REQUEST_DEATH_NOTIFICATION', 'BC_CLEAR_DEATH_NOTIFICATION', 'BC_TRANSACTION_SG', 'BR_TRANSACTION', 'BR_TRANSACTION_COMPLETE', 'BR_INCREFS', 'BR_ACQUIRE', 'BR_REPLY'].
+  
 #### Proximas Etapas ####
 
   Esta seção destaca as próximas etapas do trabalho.
@@ -82,3 +82,6 @@
   * Terminar a seleção de características do androzoo para a unificação dos datasets
   * Definição dos modelos e realização dos testes
   * Escrever os resultados obtidos
+
+#### Referências ####
+[1] Allix, Kevin, et al. "Androzoo: Collecting millions of android apps for the research community." 2016 IEEE/ACM 13th Working Conference on Mining Software Repositories (MSR). IEEE, 2016.
