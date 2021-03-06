@@ -12,8 +12,12 @@ try:
     from sklearn.naive_bayes import GaussianNB
     from sklearn.neighbors import KNeighborsClassifier
     from sklearn.ensemble import RandomForestClassifier
+    from sklearn.ensemble import AdaBoostClassifier
+    from sklearn.svm import LinearSVC
+    from sklearn.svm import SVC
 
     from sklearn.feature_extraction.text import CountVectorizer
+    from sklearn import preprocessing
     from sklearn.preprocessing import MinMaxScaler
     from sklearn import metrics
     from sklearn.model_selection import train_test_split
@@ -179,6 +183,24 @@ class Main():
         except Exception as a:
             print('main.randomForest', a)
 
+    def adaBoost(self, X_train, X_test, y_train, y_test):
+        try:
+            ab = AdaBoostClassifier(base_estimator=RandomForestClassifier(n_estimators=self.nEstimators))
+            ab.fit(X_train, y_train)
+            y_pred = ab.predict(X_test)
+            self.printData(y_test, y_pred, 'Ada Boost', 'Multi-Class')
+        except Exception as a:
+            print('main.main', a)
+
+    def linearSVC(self, X_train, X_test, y_train, y_test):
+        try:
+            lsvc = SVC(gamma='auto')
+            lsvc.fit(X_train, y_train)
+            y_pred = lsvc.predict(X_test)
+            self.printData(y_test, y_pred, 'Linear SVC', 'Multi-Class')
+        except Exception as a:
+            print('main.linearSVC', a)
+
     def featuresLabels(self, features, labels):
         try:
             X_train, X_test, y_train, y_test = train_test_split(features, labels, test_size=self.testSize, random_state=self.randomState)
@@ -197,20 +219,24 @@ class Main():
         self.KNeighbors(X_train, X_test, y_train, y_test)
         # Random Forest
         self.randomForest(X_train, X_test, y_train, y_test)
-        # Outro
+        # Ada Boost
+        self.adaBoost(X_train, X_test, y_train, y_test)
+        # Linear SVC
+        self.linearSVC(X_train, X_test, y_train, y_test)
+        # Other
         pass
 
     def main(self):
-        # Read and build dataset with fildered characteristics
+        ## Read and build dataset with fildered characteristics
         X, y = self.getData()
 
-        # # Normalization
-        # min_max_scaler = preprocessing.MinMaxScaler()
-        # final = pd.DataFrame(min_max_scaler.fit_transform(df))
+        ## Feature selection
 
+        ## Normalization
+        min_max_scaler = preprocessing.MinMaxScaler()
+        X = pd.DataFrame(min_max_scaler.fit_transform(X))
 
-
-        # Machine Learning Time
+        ## Machine Learning Time
         self.ml(X, y)
 
 if __name__ == '__main__':
