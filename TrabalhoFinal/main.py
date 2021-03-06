@@ -10,7 +10,17 @@ try:
     import pandas as pd
 
     from sklearn.feature_extraction.text import CountVectorizer
-    from sklearn import preprocessing
+    from sklearn.preprocessing import MinMaxScaler
+    from sklearn import metrics
+    from sklearn.model_selection import train_test_split
+    from sklearn.metrics import f1_score
+    from sklearn.metrics import recall_score
+    from sklearn.metrics import precision_score
+    from sklearn.metrics import balanced_accuracy_score
+    from sklearn.metrics import average_precision_score
+    from sklearn.metrics import brier_score_loss
+    from sklearn.metrics import roc_auc_score
+    from sklearn.metrics import jaccard_score
 
 except Exception as a:
     print('Import error', a)
@@ -138,6 +148,7 @@ class Main():
         # Random Forest
 
         # Outro
+        pass
 
     def main(self):
         # Read and build dataset with fildered characteristics
@@ -150,7 +161,7 @@ class Main():
 
 
         # Machine Learning Time
-        self.ml(self, X, y)
+        self.ml(X, y)
 
 if __name__ == '__main__':
 
