@@ -9,6 +9,10 @@ try:
     import numpy as np
     import pandas as pd
 
+    from sklearn.naive_bayes import GaussianNB
+    from sklearn.neighbors import KNeighborsClassifier
+    from sklearn.ensemble import RandomForestClassifier
+
     from sklearn.feature_extraction.text import CountVectorizer
     from sklearn.preprocessing import MinMaxScaler
     from sklearn import metrics
@@ -29,6 +33,12 @@ class Main():
     def __init__(self, dataset_androzoo, dataset_androDi):
         self.dataset_androzoo = dataset_androzoo
         self.dataset_androDi = dataset_androDi
+
+        self.testSize = 0.5
+        self.randomState = 42
+
+        self.kNeighbors = 3
+        self.nEstimators = 100
 
     def convertString(self, stringInput):
         try:
@@ -119,7 +129,7 @@ class Main():
             dataset = dataset[['meta.vt.score','meta.dex.size', 'manifest.tarsdk', 'manifest.minsdk', 'manifest.maxsdk', 'BC_REPLY_SG', 'BC_TRANSACTION', 'BC_REPLY', 'BC_ACQUIRE_RESULT', 'BC_FREE_BUFFER', 'BC_INCREFS', 'BC_ACQUIRE', 'BC_RELEASE', 'BC_DECREFS', 'BC_INCREFS_DONE', 'BC_ACQUIRE_DONE', 'BC_ATTEMPT_ACQUIRE', 'BC_REGISTER_LOOPER', 'BC_ENTER_LOOPER', 'BC_EXIT_LOOPER', 'BC_REQUEST_DEATH_NOTIFICATION', 'BC_CLEAR_DEATH_NOTIFICATION', 'BC_DEAD_BINDER_DONE', 'BC_TRANSACTION_SG', 'BR_ERROR', 'BR_OK', 'BR_TRANSACTION', 'BR_ACQUIRE_RESULT', 'BR_DEAD_REPLY', 'BR_TRANSACTION_COMPLETE', 'BR_INCREFS', 'BR_ACQUIRE', 'BR_RELEASE', 'BR_DECREFS', 'BR_ATTEMPT_ACQUIRE', 'BR_NOOP', 'BR_SPAWN_LOOPER', 'BR_FINISHED', 'BR_DEAD_BINDER', 'BR_CLEAR_DEATH_NOTIFICATION_DONE', 'BR_FAILED_REPLY', 'BR_REPLY']]
 
             # print(dfSecond.join(dataset))
-            return dataset, y
+            return dataset.fillna(0), y
         except Exception as a:
             print('main.getData:', a)
 
@@ -142,11 +152,51 @@ class Main():
         except Exception as a:
             print('main.printData', a)
 
-    def ml(self, X, y):
+    def naiveBayes(self, X_train, X_test, y_train, y_test):
+        try:
+            gnb = GaussianNB()
+            gnb.fit(X_train, y_train)
+            y_pred = gnb.predict(X_test)
+            self.printData(y_test, y_pred, 'Naive Bayes', 'Multi-Class')
+        except Exception as a:
+            print('main.naiveBayes', a)
+
+    def KNeighbors(self, X_train, X_test, y_train, y_test):
+        try:
+            knn = KNeighborsClassifier(n_neighbors=self.kNeighbors)
+            knn.fit(X_train, y_train)
+            y_pred = knn.predict(X_test)
+            self.printData(y_test, y_pred, 'KNeighbors', 'Multi-Class')
+        except Exception as a:
+            print('main.kNeighbors', a)
+
+    def randomForest(self, X_train, X_test, y_train, y_test):
+        try:
+            rf = RandomForestClassifier(n_estimators=self.nEstimators)
+            rf.fit(X_train, y_train)
+            y_pred = rf.predict(X_test)
+            self.printData(y_test, y_pred, 'Random Forest', 'Multi-Class')
+        except Exception as a:
+            print('main.randomForest', a)
+
+    def featuresLabels(self, features, labels):
+        try:
+            X_train, X_test, y_train, y_test = train_test_split(features, labels, test_size=self.testSize, random_state=self.randomState)
+            return X_train, X_test, y_train, y_test
+        except Exception as a:
+            print('ML.featuresLabels', a)
+
+    def ml(self, features, labels):
+
+        ## Get data for MultiClass
+        X_train, X_test, y_train, y_test = self.featuresLabels(features, labels)
+
+        # Naive
+        self.naiveBayes(X_train, X_test, y_train, y_test)
         # KNN
-
+        self.KNeighbors(X_train, X_test, y_train, y_test)
         # Random Forest
-
+        self.randomForest(X_train, X_test, y_train, y_test)
         # Outro
         pass
 
