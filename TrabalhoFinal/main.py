@@ -15,6 +15,7 @@ try:
     from sklearn.ensemble import AdaBoostClassifier
     from sklearn.svm import LinearSVC
     from sklearn.svm import SVC
+    from sklearn.neural_network import MLPClassifier
 
     from sklearn.feature_extraction.text import CountVectorizer
     from sklearn import preprocessing
@@ -37,15 +38,19 @@ try:
 
     from sklearn.ensemble import ExtraTreesClassifier
 
+    import matplotlib
+    import matplotlib.pyplot as plt
+
 except Exception as a:
     print('Import error', a)
 
 class Main():
-    def __init__(self, dataset_androzoo, dataset_androDi):
+    def __init__(self, dataset_androzoo, dataset_androDi, test_size, train_size):
         self.dataset_androzoo = dataset_androzoo
         self.dataset_androDi = dataset_androDi
 
-        self.testSize = 0.5
+        self.testSize = test_size
+        self.trainSize = train_size
         self.randomState = 42
 
         self.kNeighbors = 3
@@ -105,7 +110,7 @@ class Main():
                                 ll.append(self.convertString( (eachX.split('.')[-1:])[0] ) )
                         else:
                             ll.append( self.convertString( (x.split('.')[-1:])[0] ) )
-                print(each, len(set(ll)))
+                # print(each, len(set(ll)))
                 rr.append(set(ll))
 
             aux = rr[0].union(rr[1])
@@ -231,6 +236,14 @@ class Main():
         except Exception as a:
             print('main.linearSVC', a)
 
+    def multilayerPerceptron(self, X_train, X_test, y_train, y_test):
+        try:
+            mlp = MLPClassifier(random_state=1, max_iter=300).fit(X_train, y_train)
+            y_pred = mlp.predict(X_test)
+            self.printData(y_test, y_pred, 'Multilayer Perceptron', 'One-Class')
+        except Exception as a:
+            print('main.multilayerPerceptron', a)
+
     def printNewShape(self, Old, new):
         try:
             print('Old Shape:' , Old.shape, 'New Shape:', new.shape)
@@ -291,7 +304,7 @@ class Main():
 
     def featuresLabels(self, features, labels):
         try:
-            X_train, X_test, y_train, y_test = train_test_split(features, labels, test_size=self.testSize, random_state=self.randomState)
+            X_train, X_test, y_train, y_test = train_test_split(features, labels, test_size=self.testSize, train_size=self.trainSize, random_state=self.randomState)
             return X_train, X_test, y_train, y_test
         except Exception as a:
             print('main.featuresLabels', a)
@@ -300,6 +313,8 @@ class Main():
 
         ## Get data for MultiClass
         X_train, X_test, y_train, y_test = self.featuresLabels(features, labels)
+
+        ## Generate plot data distribution
 
         # Naive
         self.naiveBayes(X_train, X_test, y_train, y_test)
@@ -311,8 +326,8 @@ class Main():
         self.adaBoost(X_train, X_test, y_train, y_test)
         # Linear SVC
         self.linearSVC(X_train, X_test, y_train, y_test)
-        # Other
-        pass
+        # MLP
+        self.multilayerPerceptron(X_train, X_test, y_train, y_test)
 
     def main(self):
         ## Read and build dataset with fildered characteristics
@@ -321,7 +336,7 @@ class Main():
         ## Feature selection
         # X = self.L1BasedFS(X, y)
         # X = self.SelectKBestFS(X, y, int(X.shape[1]/2), 'chi2')
-        # X = self.SelectPercentileFS(X, y)
+        X = self.SelectPercentileFS(X, y)
         # X = self.GenericUnivariateSelectFS(X, y)
         # X = self.TreeBasedFS(X, y, self.nEstimatorsFS)
 
@@ -336,16 +351,22 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(description='CDS Trabalho Final.')
 
-    parser.add_argument('--version','-v','-vvv','-version', action='version', version=str('Base 0.1'))
+    parser.add_argument('--version','-v','-vvv','-version', action='version', version=str('Base 0.2'))
 
     parser.add_argument('--dataset-androzoo', type=str, required=True, help='Input dataset androzoo file.')
 
     parser.add_argument('--dataset-androDi', type=str, required=True, help='Input dataset AndroDi file.')
 
+    parser.add_argument('--test-size', type=int, default=0.2, required=False, help='Test subsets portion (default 0.2).')
+
+    parser.add_argument('--train-size', type=int, default=0.8, required=False, help='Train subsets portion (default 0.8).')
+
     args = parser.parse_args()
     kwargs = {
         'dataset_androzoo': args.dataset_androzoo,
-        'dataset_androDi': args.dataset_androDi
+        'dataset_androDi': args.dataset_androDi,
+        'test_size': args.test_size,
+        'train_size': args.train_size
     }
 
     try:
