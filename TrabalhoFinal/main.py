@@ -48,7 +48,7 @@ class Main():
         self.testSize = 0.5
         self.randomState = 42
 
-        self.kNeighbors = 5
+        self.kNeighbors = 3
         self.nEstimators = 100
         self.nEstimatorsFS = 100
 
@@ -96,7 +96,7 @@ class Main():
             ## Build new characteristics columns for the dataset
             # for each in ['resource.entry', 'manifest.permission',  'manifest.category']:
             rr = []
-            for each in ['manifest.permission',  'manifest.category']:
+            for each in ['manifest.permission',  'manifest.category', 'source.class.package']:
                 ll = []
                 for elem in list(dataset[each]):
                     for x in elem.split(" "):
@@ -105,10 +105,21 @@ class Main():
                                 ll.append(self.convertString( (eachX.split('.')[-1:])[0] ) )
                         else:
                             ll.append( self.convertString( (x.split('.')[-1:])[0] ) )
-                # print(each, len(set(ll)))
+                print(each, len(set(ll)))
                 rr.append(set(ll))
 
-            rr = rr[0].union(rr[1])
+            aux = rr[0].union(rr[1])
+            rr  = aux.union(rr[2])
+
+            ## Get just One (test each list column from the Fab. dataset)
+            # rr = []
+            # for each in dataset['manifest.permission'].values:
+            #     if (type(each) == list):
+            #         for elemEach in each:
+            #             rr.append(self.convertString( (elemEach.split('.')[-1:])[0] ))
+            #     else:
+            #         rr.append(self.convertString( (each.split('.')[-1:])[0] ))
+            # rr = (set(rr))
 
             ## Get dataset second part
             dfSecond = pd.DataFrame(columns=list(rr))
@@ -118,6 +129,7 @@ class Main():
 
                 xX = (dataset['manifest.category'].iloc[index])
                 xY = (dataset['manifest.permission'].iloc[index])
+                xZ = (dataset['source.class.package'].iloc[index])
 
                 for eachxX in xX.split(" "):
                     if(type(eachxX) == list):
@@ -127,6 +139,14 @@ class Main():
                         ll.append( self.convertString( (eachxX.split('.')[-1:])[0] ) )
 
                 for eachxY in xY.split(" "):
+                    if(type(eachxY) == list):
+                        for seilaToSemNomeY in eachxY:
+                            ll.append(self.convertString( (seilaToSemNomeY.split('.')[-1:])[0] ) )
+                    else:
+                        ll.append( self.convertString( (eachxY.split('.')[-1:])[0] ) )
+
+
+                for eachxY in xZ.split(" "):
                     if(type(eachxY) == list):
                         for seilaToSemNomeY in eachxY:
                             ll.append(self.convertString( (seilaToSemNomeY.split('.')[-1:])[0] ) )
