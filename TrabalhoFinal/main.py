@@ -30,6 +30,13 @@ try:
     from sklearn.metrics import roc_auc_score
     from sklearn.metrics import jaccard_score
 
+    from sklearn.feature_selection import SelectFromModel
+    from sklearn.feature_selection import SelectKBest, SelectPercentile
+    from sklearn.feature_selection import chi2, f_regression, f_classif
+    from sklearn.feature_selection import GenericUnivariateSelect, SelectFwe, SelectFdr, SelectFpr
+
+    from sklearn.ensemble import ExtraTreesClassifier
+
 except Exception as a:
     print('Import error', a)
 
@@ -41,8 +48,9 @@ class Main():
         self.testSize = 0.5
         self.randomState = 42
 
-        self.kNeighbors = 3
+        self.kNeighbors = 5
         self.nEstimators = 100
+        self.nEstimatorsFS = 100
 
     def convertString(self, stringInput):
         try:
@@ -133,7 +141,7 @@ class Main():
             dataset = dataset[['meta.vt.score','meta.dex.size', 'manifest.tarsdk', 'manifest.minsdk', 'manifest.maxsdk', 'BC_REPLY_SG', 'BC_TRANSACTION', 'BC_REPLY', 'BC_ACQUIRE_RESULT', 'BC_FREE_BUFFER', 'BC_INCREFS', 'BC_ACQUIRE', 'BC_RELEASE', 'BC_DECREFS', 'BC_INCREFS_DONE', 'BC_ACQUIRE_DONE', 'BC_ATTEMPT_ACQUIRE', 'BC_REGISTER_LOOPER', 'BC_ENTER_LOOPER', 'BC_EXIT_LOOPER', 'BC_REQUEST_DEATH_NOTIFICATION', 'BC_CLEAR_DEATH_NOTIFICATION', 'BC_DEAD_BINDER_DONE', 'BC_TRANSACTION_SG', 'BR_ERROR', 'BR_OK', 'BR_TRANSACTION', 'BR_ACQUIRE_RESULT', 'BR_DEAD_REPLY', 'BR_TRANSACTION_COMPLETE', 'BR_INCREFS', 'BR_ACQUIRE', 'BR_RELEASE', 'BR_DECREFS', 'BR_ATTEMPT_ACQUIRE', 'BR_NOOP', 'BR_SPAWN_LOOPER', 'BR_FINISHED', 'BR_DEAD_BINDER', 'BR_CLEAR_DEATH_NOTIFICATION_DONE', 'BR_FAILED_REPLY', 'BR_REPLY']]
 
             # print(dfSecond.join(dataset))
-            dataset = dfSecond.join(dataset)
+            dataset = dfSecond.join(dataset) # Merge the two dataFrames
 
             return dataset.fillna(0), y
         except Exception as a:
@@ -203,12 +211,70 @@ class Main():
         except Exception as a:
             print('main.linearSVC', a)
 
+    def printNewShape(self, Old, new):
+        try:
+            print('Old Shape:' , Old.shape, 'New Shape:', new.shape)
+        except Exception as a:
+            print('main.printNewShape', a)
+
+    def L1BasedFS(self, X, y):
+        try:
+            lsvc = LinearSVC(C=0.01, penalty="l1", dual=False).fit(X, y)
+            model = SelectFromModel(lsvc, prefit=True)
+            X_new = model.transform(X)
+            self.printNewShape(X, X_new)
+            return X_new
+        except Exception as a:
+            print('main.L1BasedFeatureSelection', a)
+
+    def SelectKBestFS(self, X, y, N_bestFeatures, alg):
+        try:
+            # SelectKBest removes all but the highest scoring features
+            if(alg == 'chi2'):
+                X_new = SelectKBest(score_func=chi2, k=N_bestFeatures).fit_transform(X, y)
+            elif(alg == 'f_classif'):
+                X_new = SelectKBest(score_func=f_classif, k=N_bestFeatures).fit_transform(X, y)
+            elif(alg == 'f_regression'):
+                X_new = SelectKBest(score_func=f_regression, k=N_bestFeatures).fit_transform(X, y)
+            self.printNewShape(X, X_new)
+            return X_new
+        except Exception as a:
+            print('main.SelectKBestFS', a)
+
+    def SelectPercentileFS(self, X, y):
+        try:
+            X_new = SelectPercentile().fit_transform(X, y)
+            self.printNewShape(X, X_new)
+            return X_new
+        except Exception as a:
+            print('main.SelectPercentileFS', a)
+
+    def GenericUnivariateSelectFS(self, X, y):
+        try:
+            transformer = GenericUnivariateSelect(chi2, mode='fwe' ) # ['chi2', 'mutual_info_classif', 'f_classif', 'f_regression', 'mutual_info_regression'] ['percentile', 'k_best', 'fpr', 'fdr', 'fwe']
+            X_new = transformer.fit_transform(X, y)
+            self.printNewShape(X, X_new)
+            return X_new
+        except Exception as a:
+            print('main.GenericUnivariateSelectFS', a)
+
+    def TreeBasedFS(self, X, y, n_esti):
+        try:
+            clf = ExtraTreesClassifier(n_estimators=n_esti)
+            clf = clf.fit(X, y)
+            model = SelectFromModel(clf, prefit=True)
+            X_new = model.transform(X)
+            self.printNewShape(X, X_new)
+            return X_new
+        except Exception as a:
+            print('main.TreeBasedFS', a)
+
     def featuresLabels(self, features, labels):
         try:
             X_train, X_test, y_train, y_test = train_test_split(features, labels, test_size=self.testSize, random_state=self.randomState)
             return X_train, X_test, y_train, y_test
         except Exception as a:
-            print('ML.featuresLabels', a)
+            print('main.featuresLabels', a)
 
     def ml(self, features, labels):
 
@@ -233,6 +299,11 @@ class Main():
         X, y = self.getData()
 
         ## Feature selection
+        # X = self.L1BasedFS(X, y)
+        # X = self.SelectKBestFS(X, y, int(X.shape[1]/2), 'chi2')
+        # X = self.SelectPercentileFS(X, y)
+        # X = self.GenericUnivariateSelectFS(X, y)
+        # X = self.TreeBasedFS(X, y, self.nEstimatorsFS)
 
         ## Normalization
         min_max_scaler = preprocessing.MinMaxScaler()
