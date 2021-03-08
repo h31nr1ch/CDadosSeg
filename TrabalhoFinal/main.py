@@ -30,6 +30,7 @@ try:
     from sklearn.metrics import brier_score_loss
     from sklearn.metrics import roc_auc_score
     from sklearn.metrics import jaccard_score
+    from sklearn.metrics import confusion_matrix
 
     from sklearn.feature_selection import SelectFromModel
     from sklearn.feature_selection import SelectKBest, SelectPercentile
@@ -181,12 +182,20 @@ class Main():
 
             # https://scikit-learn.org/stable/modules/model_evaluation.html
             # The balanced accuracy in binary and multiclass classification problems to deal with imbalanced datasets. It is defined as the average of recall obtained on each class. The best value is 1 and the worst value is 0 when adjusted=False
-            print("Balanced Accuracy:\t", balanced_accuracy_score(y_test, y_pred))
-            print("Average Precision:\t", average_precision_score(y_test, y_pred))
+            # print("Balanced Accuracy:\t", balanced_accuracy_score(y_test, y_pred))
+            # print("Average Precision:\t", average_precision_score(y_test, y_pred))
+            
             # The smaller the Brier score, the better, hence the naming with “loss”. Across all items in a set N predictions, the Brier score measures the mean squared difference between (1) the predicted probability assigned to the possible outcomes for item i, and (2) the actual outcome. Therefore, the lower the Brier score is for a set of predictions, the better the predictions are calibrated.
             if(alg != 'One Class SVM' and alg != 'Multilayer Perceptron' and alg != 'Isolation Forest'):
                 print("Brier Score:\t\t", brier_score_loss(y_test, y_pred))
                 print("ROC AUC:\t\t", roc_auc_score(y_test, y_pred))
+
+            tn, fp, fn, tp = confusion_matrix(y_test, y_pred).ravel()
+            print(" ––––––––––––––––––––––––––––––––––––– ")
+            print("| TruePositive ", tp, "| FalsePositive ", fp,"|")
+            print("| FalseNevative ", fn, "| TrueNegative ", tn,"|")
+            print(" ––––––––––––––––––––––––––––––––––––– ")
+
             print(" ", flush=True)
         except Exception as a:
             print('main.printData', a)
