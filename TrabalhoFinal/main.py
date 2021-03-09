@@ -41,6 +41,10 @@ try:
     from sklearn.feature_selection import GenericUnivariateSelect, SelectFwe, SelectFdr, SelectFpr
 
     from sklearn.ensemble import ExtraTreesClassifier
+    
+    from pickle import load
+    from pickle import dump
+    import os
 
     import matplotlib
     import matplotlib.pyplot as plt
@@ -52,6 +56,9 @@ class Main():
     def __init__(self, dataset_androzoo, dataset_androDi, test_size, train_size):
         self.dataset_androzoo = dataset_androzoo
         self.dataset_androDi = dataset_androDi
+        
+        self.modelsPath = 'MlModels/'
+        self.FSFile = 'FS.pkl'
 
         self.testSize = test_size
         self.trainSize = train_size
@@ -208,54 +215,60 @@ class Main():
         except Exception as a:
             print('main.printData', a)
 
-    def naiveBayes(self, X_train, X_test, y_train, y_test):
+    def naiveBayes(self, X_train, X_test, y_train, y_test, fileName):
         try:
             gnb = GaussianNB()
             gnb.fit(X_train, y_train)
+            dump(gnb, open(self.modelsPath+fileName, 'wb'))
             y_pred = gnb.predict(X_test)
             self.printData(y_test, y_pred, 'Naive Bayes', 'Multi-Class')
         except Exception as a:
             print('main.naiveBayes', a)
 
-    def KNeighbors(self, X_train, X_test, y_train, y_test):
+    def KNeighbors(self, X_train, X_test, y_train, y_test, fileName):
         try:
             knn = KNeighborsClassifier(n_neighbors=self.kNeighbors)
             knn.fit(X_train, y_train)
+            dump(knn, open(self.modelsPath+fileName, 'wb'))
             y_pred = knn.predict(X_test)
             self.printData(y_test, y_pred, 'KNeighbors', 'Multi-Class')
         except Exception as a:
             print('main.kNeighbors', a)
 
-    def randomForest(self, X_train, X_test, y_train, y_test):
+    def randomForest(self, X_train, X_test, y_train, y_test, fileName):
         try:
             rf = RandomForestClassifier(n_estimators=self.nEstimators)
             rf.fit(X_train, y_train)
+            dump(rf, open(self.modelsPath+fileName, 'wb'))
             y_pred = rf.predict(X_test)
             self.printData(y_test, y_pred, 'Random Forest', 'Multi-Class')
         except Exception as a:
             print('main.randomForest', a)
 
-    def adaBoost(self, X_train, X_test, y_train, y_test):
+    def adaBoost(self, X_train, X_test, y_train, y_test, fileName):
         try:
             ab = AdaBoostClassifier(base_estimator=RandomForestClassifier(n_estimators=self.nEstimators))
             ab.fit(X_train, y_train)
+            dump(ab, open(self.modelsPath+fileName, 'wb'))
             y_pred = ab.predict(X_test)
             self.printData(y_test, y_pred, 'Ada Boost', 'Multi-Class')
         except Exception as a:
             print('main.main', a)
 
-    def linearSVC(self, X_train, X_test, y_train, y_test):
+    def linearSVC(self, X_train, X_test, y_train, y_test, fileName):
         try:
             lsvc = SVC(gamma='auto')
             lsvc.fit(X_train, y_train)
+            dump(lsvc, open(self.modelsPath+fileName, 'wb'))
             y_pred = lsvc.predict(X_test)
             self.printData(y_test, y_pred, 'Linear SVC', 'Multi-Class')
         except Exception as a:
             print('main.linearSVC', a)
 
-    def multilayerPerceptron(self, X_train, X_test, y_train, y_test):
+    def multilayerPerceptron(self, X_train, X_test, y_train, y_test, fileName):
         try:
             mlp = MLPClassifier(random_state=1, max_iter=300).fit(X_train, y_train)
+            dump(mlp, open(self.modelsPath+fileName, 'wb'))
             y_pred = mlp.predict(X_test)
             self.printData(y_test, y_pred, 'Multilayer Perceptron', 'One-Class')
         except Exception as a:
@@ -293,7 +306,9 @@ class Main():
 
     def SelectPercentileFS(self, X, y):
         try:
-            X_new = SelectPercentile().fit_transform(X, y)
+            fs = SelectPercentile().fit(X, y)
+            dump(fs, open(self.FSFile, 'wb'))
+            X_new = fs.transform(X)
             self.printNewShape(X, X_new)
             return X_new
         except Exception as a:
@@ -331,53 +346,76 @@ class Main():
         ## Get data for MultiClass
         X_train, X_test, y_train, y_test = self.featuresLabels(features, labels)
         self.mlAlgos(X_train, X_test, y_train, y_test)
+    
+    def generateModelName(self, model, isKFold, nFold):
+        if isKFold:
+            return model+' - Fold: '+str(nFold)+'.pkl'
+        else:
+            return model+'.pkl'
 
-    def mlAlgos(self, X_train, X_test, y_train, y_test):    
-        ## Generate plot data distribution
+    def mlAlgos(self, X_train, X_test, y_train, y_test, isKFold=False, nFold=0):    
 
         # Naive
-        self.naiveBayes(X_train, X_test, y_train, y_test)
+        self.naiveBayes(X_train, X_test, y_train, y_test, self.generateModelName('Naive Bayes', isKFold, nFold))
         # KNN
-        self.KNeighbors(X_train, X_test, y_train, y_test)
+        self.KNeighbors(X_train, X_test, y_train, y_test, self.generateModelName('KNeighbors', isKFold, nFold))
         # Random Forest
-        self.randomForest(X_train, X_test, y_train, y_test)
+        self.randomForest(X_train, X_test, y_train, y_test, self.generateModelName('RF', isKFold, nFold))
         # Ada Boost
-        self.adaBoost(X_train, X_test, y_train, y_test)
+        self.adaBoost(X_train, X_test, y_train, y_test, self.generateModelName('Ada Boost', isKFold, nFold))
         # Linear SVC
-        self.linearSVC(X_train, X_test, y_train, y_test)
+        self.linearSVC(X_train, X_test, y_train, y_test, self.generateModelName('Linear SVC', isKFold, nFold))
         # MLP
-        self.multilayerPerceptron(X_train, X_test, y_train, y_test)
+        self.multilayerPerceptron(X_train, X_test, y_train, y_test, self.generateModelName('MLP', isKFold, nFold))
     
     def kFoldMl(self, features, labels):
-        print('####### Starting kFold ############# \n ')
+        print('####### kFold ############# \n ')
         ## Generate 5 folds for train
         kf = KFold(n_splits=5)
         i = 1
         for train_index, test_index in kf.split(features, labels):
             print('Fold '+str(i)+':\n')
-            i+=1
+            ## Make split based on folds
             X_train, X_test = features.iloc[train_index], features.iloc[test_index]
             y_train, y_test = labels[train_index], labels[test_index]
-            self.mlAlgos(X_train, X_test, y_train, y_test)
+            ## ML
+            self.mlAlgos(X_train, X_test, y_train, y_test, True, i)
+            i+=1
+    
+    def evaluateModels(self, X_test, y_test):
+        print('\n ####### Testing Models ############# \n ')
+        ## Load and transform data with FS model
+        fs = load(open(self.FSFile, 'rb'))
+        fs.transform(X_test)
+
+        ## Load models and test with test data
+        for model in os.listdir(self.modelsPath):
+            ml = load(open(self.modelsPath+model, 'rb'))
+            y_pred = ml.predict(X_test)
+            self.printData(y_test, y_pred, model[0:len(model)-4], '')
 
     def main(self):
         ## Read and build dataset with fildered characteristics
         X, y = self.getData()
-
+        
+        ## Split data in 8/2 proportion
+        X_train, X_test, y_train, y_test = self.featuresLabels(X, y)
+        
         ## Feature selection
         # X = self.L1BasedFS(X, y)
         # X = self.SelectKBestFS(X, y, int(X.shape[1]/2), 'chi2')
-        X = self.SelectPercentileFS(X, y)
+        X = self.SelectPercentileFS(X_train, y_train)
         # X = self.GenericUnivariateSelectFS(X, y)
         # X = self.TreeBasedFS(X, y, self.nEstimatorsFS)
 
         ## Normalization
         min_max_scaler = preprocessing.MinMaxScaler()
-        X = pd.DataFrame(min_max_scaler.fit_transform(X))
-
+        X_train = pd.DataFrame(min_max_scaler.fit_transform(X_train))
         ## Machine Learning Time
-        self.ml(X, y)
-        self.kFoldMl(X, y)
+        self.ml(X_train, y_train)
+        self.kFoldMl(X_train, y_train)
+        ## Evaluation Time
+        self.evaluateModels(X_test, y_test)
 
 if __name__ == '__main__':
 
