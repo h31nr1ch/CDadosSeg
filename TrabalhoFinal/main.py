@@ -32,6 +32,8 @@ try:
     from sklearn.metrics import jaccard_score
     from sklearn.metrics import confusion_matrix
     from sklearn.metrics import mean_absolute_error
+    
+    from sklearn.model_selection import KFold
 
     from sklearn.feature_selection import SelectFromModel
     from sklearn.feature_selection import SelectKBest, SelectPercentile
@@ -328,7 +330,9 @@ class Main():
 
         ## Get data for MultiClass
         X_train, X_test, y_train, y_test = self.featuresLabels(features, labels)
+        self.mlAlgos(X_train, X_test, y_train, y_test)
 
+    def mlAlgos(self, X_train, X_test, y_train, y_test):    
         ## Generate plot data distribution
 
         # Naive
@@ -343,6 +347,18 @@ class Main():
         self.linearSVC(X_train, X_test, y_train, y_test)
         # MLP
         self.multilayerPerceptron(X_train, X_test, y_train, y_test)
+    
+    def kFoldMl(self, features, labels):
+        print('####### Starting kFold ############# \n ')
+        ## Generate 5 folds for train
+        kf = KFold(n_splits=5)
+        i = 1
+        for train_index, test_index in kf.split(features, labels):
+            print('Fold '+str(i)+':\n')
+            i+=1
+            X_train, X_test = features.iloc[train_index], features.iloc[test_index]
+            y_train, y_test = labels[train_index], labels[test_index]
+            self.mlAlgos(X_train, X_test, y_train, y_test)
 
     def main(self):
         ## Read and build dataset with fildered characteristics
@@ -361,6 +377,7 @@ class Main():
 
         ## Machine Learning Time
         self.ml(X, y)
+        self.kFoldMl(X, y)
 
 if __name__ == '__main__':
 
