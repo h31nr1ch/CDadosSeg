@@ -32,6 +32,7 @@ try:
     from sklearn.metrics import jaccard_score
     from sklearn.metrics import confusion_matrix
     from sklearn.metrics import mean_absolute_error
+    from sklearn.metrics import roc_curve
     
     from sklearn.model_selection import KFold
 
@@ -59,7 +60,7 @@ class Main():
         
         self.modelsPath = 'MlModels/'
         self.FSFile = 'FS.pkl'
-
+        self.imgsPath = 'rocPlots/'
         self.testSize = test_size
         self.trainSize = train_size
         self.randomState = 42
@@ -214,6 +215,23 @@ class Main():
             print(" ", flush=True)
         except Exception as a:
             print('main.printData', a)
+    
+    def saveImg(self,fileName, img):
+        img.savefig(self.imgsPath+fileName)
+    
+    def plotRocCurve(self, model, X_test, y_test, fileName, label):
+        f = plt.figure(1)
+        probs = model.predict_proba(X_test)
+        probs = probs[:, 1]
+        fpr, tpr, _ = roc_curve(y_test, probs)
+        plt.plot(fpr, tpr, marker='.', label=label)
+        plt.xlabel('False Positive Rate')
+        plt.ylabel('True Positive Rate')
+        plt.legend()
+        self.saveImg(fileName, f)
+        if ('5' in label) or ('-' not in fileName):
+            plt.close(f)
+
 
     def naiveBayes(self, X_train, X_test, y_train, y_test, fileName):
         try:
@@ -257,7 +275,7 @@ class Main():
 
     def linearSVC(self, X_train, X_test, y_train, y_test, fileName):
         try:
-            lsvc = SVC(gamma='auto')
+            lsvc = SVC(gamma='auto', probability=True)
             lsvc.fit(X_train, y_train)
             dump(lsvc, open(self.modelsPath+fileName, 'wb'))
             y_pred = lsvc.predict(X_test)
@@ -352,7 +370,18 @@ class Main():
             return model+' - Fold: '+str(nFold)+'.pkl'
         else:
             return model+'.pkl'
-
+    
+    def generateImgName(self, algoName, isKFold):
+        algoName = algoName.split('-')[0]
+        if isKFold:
+            return algoName+' - kFold.png'
+        else:
+            return algoName+'.png'
+    def generateLabel(self, algoName, isKFold, nFold):
+        if isKFold:
+            return algoName+' - Fold: '+str(nFold)
+        else:
+            return algoName
     def mlAlgos(self, X_train, X_test, y_train, y_test, isKFold=False, nFold=0):    
 
         # Naive
@@ -371,7 +400,7 @@ class Main():
     def kFoldMl(self, features, labels):
         print('####### kFold ############# \n ')
         ## Generate 5 folds for train
-        kf = KFold(n_splits=5)
+        kf = KFold(n_splits=5, shuffle=True, random_state =self.randomState)
         i = 1
         for train_index, test_index in kf.split(features, labels):
             print('Fold '+str(i)+':\n')
@@ -389,11 +418,45 @@ class Main():
         fs.transform(X_test)
 
         ## Load models and test with test data
-        for model in os.listdir(self.modelsPath):
+        for model in sorted(os.listdir(self.modelsPath)):
             ml = load(open(self.modelsPath+model, 'rb'))
             y_pred = ml.predict(X_test)
+            imgName = ''
+            if 'Fold' in model:
+                imgName = 'Teste_'+model.split(':')[0]+'.png'
+            else:
+                imgName = 'Teste_'+model[0:len(model)-4]
             self.printData(y_test, y_pred, model[0:len(model)-4], '')
+    def getIndex(self, model, testSplit):
+        if '1' in model:
+            return testSplit[0]
+        if '2' in model:
+            return testSplit[1]
+        if '3' in model:
+            return testSplit[2]
+        if '4' in model:
+            return testSplit[3]
+        if '5' in model:
+            return testSplit[4]
 
+    def generateImgs(self, X_test, y_test, isTest):
+        path = os.listdir(self.modelsPath)
+        notKFold = [ml for ml in path if '-' not in ml]
+        kFold = [ml for ml in path if '-' in ml]
+        kf = KFold(n_splits=5, shuffle=True, random_state =self.randomState)
+        testSplit = []
+        testStr = ''
+        if isTest:
+            testStr = 'Test_'
+        for train_index, test_index in kf.split(X_test, y_test):
+            testSplit.append(test_index)
+        for model in notKFold:
+            ml = load(open(self.modelsPath+model, 'rb'))
+            self.plotRocCurve(ml, np.array(X_test), np.array(y_test), self.generateImgName(testStr+model[0:len(model)-4], False), self.generateLabel(model[0:len(model)-4], False, 0))
+        for model in sorted(kFold):
+            ml = load(open(self.modelsPath+model, 'rb'))
+            self.plotRocCurve(ml, np.array(X_test.iloc[self.getIndex(model, testSplit)]), np.array(y_test[self.getIndex(model, testSplit)]), self.generateImgName(testStr+model[0:len(model)-4], True), self.generateLabel(model[0:len(model)-4], True, model.split('.')[0].split(': ')[1]))
+    
     def main(self):
         ## Read and build dataset with fildered characteristics
         X, y = self.getData()
@@ -416,6 +479,8 @@ class Main():
         self.kFoldMl(X_train, y_train)
         ## Evaluation Time
         self.evaluateModels(X_test, y_test)
+        self.generateImgs(X_train, y_train, False)
+        self.generateImgs(X_test, y_test, True)
 
 if __name__ == '__main__':
 
