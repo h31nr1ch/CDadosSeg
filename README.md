@@ -7,6 +7,7 @@
     - [T1](#T1)
     - [T2](#T2)
 - [Projeto da disciplina](#Projeto-da-disciplina)
+    - [T3](#T3)
     - [Atributos e representação](#Atributos-e-representação)
     - [Próximas etapas](#Próximas-etapas)
 - [Referências](#Referências)
@@ -56,6 +57,29 @@
 ## Projeto da disciplina ##
 
   Grupo: Tiago Heinrich (github: [h31nr1ch](https://github.com/h31nr1ch)) e Rodrigo Lemos (github: [Rodrigo-Lemos](https://github.com/Rodrigo-Lemos))
+
+  O relatório pode ser encontrado [aqui](TrabalhoFinal/final.pdf). Onde é apresentado uma visão da problemática abordada e discussão dos resultados obtidos.
+
+  <details>
+    <summary>Requisitos: (Clique para expandir!)</summary>
+
+    * Python >= 3.8
+    * pip3 com os seguintes pacotes:
+      * numpy
+      * argparse
+      * pandas
+      * sklearn
+      * pickle
+      * matplotlib
+  </details>
+
+  Para executar a aplicação basta passar dois atributos de entrada que consistem na base do androzoo (especificamente o subset apresentado por [fabriciojoc](https://github.com/fabriciojoc)) e a base androDi. Ambas podem ser encontradas no diretório `dataset`.
+
+  ```
+  python3 main.py --dataset-androzoo dataset/datasetFabricio.csv --dataset-androDi dataset/azBalanceado.csv
+  ```
+
+### T3 ###
 
   A proposta a ser estudada, consiste na utilização do dataset Androzoo [1] em conjunto com um dataset gerado dinâmicamente (androDi) com objetivo de identificar malwares no Android. O dataset híbrido gerado dessa combinação tem como objetivo solucionar problemas existentes em ambos os datasets, como a ofuscação de código (problema de datasets estáticos) e a dificuldade na identificação de ataques online com o androDi devido a complexidade para coletar traços de execução das aplicações.
 
