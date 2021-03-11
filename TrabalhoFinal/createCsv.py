@@ -174,7 +174,6 @@ class Main():
 
             ## Get data with some value
             # print(dataset.columns.values.tolist())
-
             dataset = dataset[['meta.dex.size', 'manifest.tarsdk', 'manifest.minsdk', 'manifest.maxsdk', 'BC_REPLY_SG', 'BC_TRANSACTION', 'BC_REPLY', 'BC_ACQUIRE_RESULT', 'BC_FREE_BUFFER', 'BC_INCREFS', 'BC_ACQUIRE', 'BC_RELEASE', 'BC_DECREFS', 'BC_INCREFS_DONE', 'BC_ACQUIRE_DONE', 'BC_ATTEMPT_ACQUIRE', 'BC_REGISTER_LOOPER', 'BC_ENTER_LOOPER', 'BC_EXIT_LOOPER', 'BC_REQUEST_DEATH_NOTIFICATION', 'BC_CLEAR_DEATH_NOTIFICATION', 'BC_DEAD_BINDER_DONE', 'BC_TRANSACTION_SG', 'BR_ERROR', 'BR_OK', 'BR_TRANSACTION', 'BR_ACQUIRE_RESULT', 'BR_DEAD_REPLY', 'BR_TRANSACTION_COMPLETE', 'BR_INCREFS', 'BR_ACQUIRE', 'BR_RELEASE', 'BR_DECREFS', 'BR_ATTEMPT_ACQUIRE', 'BR_NOOP', 'BR_SPAWN_LOOPER', 'BR_FINISHED', 'BR_DEAD_BINDER', 'BR_CLEAR_DEATH_NOTIFICATION_DONE', 'BR_FAILED_REPLY', 'BR_REPLY']]
 
             # print(dfSecond.join(dataset))
@@ -326,9 +325,7 @@ class Main():
         try:
             fs = SelectPercentile().fit(X, y)
             dump(fs, open(self.FSFile, 'wb'))
-            mask = fs.get_support()
-            X_new=X[X.columns[mask]]
-            #X_new = fs.transform(X)
+            X_new = fs.transform(X)
             self.printNewShape(X, X_new)
             return X_new
         except Exception as a:
@@ -416,8 +413,8 @@ class Main():
     def evaluateModels(self, X_test, y_test):
         print('\n ####### Testing Models ############# \n ')
         ## Load and transform data with FS model
-        #fs = load(open(self.FSFile, 'rb'))
-        #X_test = fs.transform(X_test)
+        fs = load(open(self.FSFile, 'rb'))
+        X_test = fs.transform(X_test)
 
         ## Load models and test with test data
         for model in sorted(os.listdir(self.modelsPath)):
@@ -465,28 +462,34 @@ class Main():
         
         ## Split data in 8/2 proportion
         X_train, X_test, y_train, y_test = self.featuresLabels(X, y)
-        
         ## Feature selection
         # X = self.L1BasedFS(X, y)
         # X = self.SelectKBestFS(X, y, int(X.shape[1]/2), 'chi2')
-        X_train = self.SelectPercentileFS(X_train, y_train)
+        X = self.SelectPercentileFS(X_train, y_train)
         # X = self.GenericUnivariateSelectFS(X, y)
         # X = self.TreeBasedFS(X, y, self.nEstimatorsFS)
-
         ## Normalization
         min_max_scaler = preprocessing.MinMaxScaler()
-        X_train = pd.DataFrame(min_max_scaler.fit_transform(X_train))
-        ## Machine Learning Time
-        self.ml(X_train, y_train)
-        self.kFoldMl(X_train, y_train)
-        ## Evaluation Time
+        X = pd.DataFrame(min_max_scaler.fit_transform(X))
         fs = load(open(self.FSFile, 'rb'))
+        #X_test = fs.transform(X_test)
         mask = fs.get_support()
         X_test=X_test[X_test.columns[mask]]
-        #X_test = fs.transform(X_test)
-        self.evaluateModels(X_test, y_test)
-        self.generateImgs(X_train, y_train, False)
-        self.generateImgs(X_test, y_test, True)
+        X_train=X_train[X_train.columns[mask]]
+        X_train['label'] = pd.Series(y_train)
+        #print(y_train)
+        X_train.to_csv('train.csv')
+        #print(len(y_test))
+        #print(X_test['label'])
+        X_test['label'] = pd.Series(y_test)
+        X_test.to_csv('test.csv')
+        ## Machine Learning Time
+        #self.ml(X_train, y_train)
+        #self.kFoldMl(X_train, y_train)
+        ## Evaluation Time
+        #self.evaluateModels(X_test, y_test)
+        #self.generateImgs(X_train, y_train, False)
+        #self.generateImgs(X_test, y_test, True)
 
 if __name__ == '__main__':
 
